@@ -105,21 +105,6 @@ export default function ProcessTimeline() {
           </div>
         </div>
 
-        {/* Accréditation */}
-        <div className="mt-14 bg-[#f8f9fa] rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-          <div className="w-12 h-12 rounded-xl bg-[#1a9e75]/20 flex items-center justify-center shrink-0">
-            <svg className="w-6 h-6 text-[#1a9e75]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-            </svg>
-          </div>
-          <div>
-            <div className="font-bold text-[#0d1e3a]">Accréditation OPQIBI n°23 04 5139</div>
-            <div className="text-[#2c2c2a]/60 text-sm">
-              LEDX Énergie est certifié OPQIBI pour le développement d&apos;opérations CEE.
-              Contrôle qualité COFRAC sur chaque dossier.
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

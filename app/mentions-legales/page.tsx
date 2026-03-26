@@ -27,7 +27,6 @@ export default function MentionsLegalesPage() {
             <p><strong className="text-[#0d1e3a]">Siège social :</strong> 25 rue de Ponthieu, 75008 Paris, France</p>
             <p><strong className="text-[#0d1e3a]">Email :</strong> contact@ledxenergie.com</p>
             <p><strong className="text-[#0d1e3a]">Téléphone :</strong> +33 1 59 39 25 71</p>
-            <p><strong className="text-[#0d1e3a]">Certification OPQIBI :</strong> n°23 04 5139</p>
           </div>
 
           {/* ── 2. Hébergement ── */}

@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "À Propos — LEDX Énergie, développeur d'opérations CEE",
   description:
-    "Fondée en 2018, LEDX Énergie est un développeur d'opérations CEE présent partout en France. Accréditation OPQIBI n°23 04 5139. 25 rue de Ponthieu, Paris 8e.",
+    "Fondée en 2018, LEDX Énergie est un développeur d'opérations CEE présent partout en France. 9 000+ réalisations. 25 rue de Ponthieu, Paris 8e.",
 };
 
 const processSteps = [
@@ -97,30 +97,6 @@ export default function AProposPage() {
                 </div>
               </div>
             ))}
-          </div>
-        </section>
-
-        {/* Accréditation */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-[#0d1e3a] mb-6">Accréditation & qualité</h2>
-          <div className="bg-[#1a9e75]/10 border border-[#1a9e75]/20 rounded-2xl p-6">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#1a9e75]/20 flex items-center justify-center shrink-0">
-                <svg className="w-6 h-6 text-[#1a9e75]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
-              </div>
-              <div>
-                <div className="font-bold text-[#0d1e3a] text-lg mb-1">
-                  Certification OPQIBI n°23 04 5139
-                </div>
-                <p className="text-[#2c2c2a]/70 text-sm leading-relaxed">
-                  LEDX Énergie est certifiée OPQIBI pour le développement d&apos;opérations CEE,
-                  attestant de notre expertise et de la qualité de nos processus.
-                  Chaque dossier est soumis au contrôle COFRAC avant obtention des certificats.
-                </p>
-              </div>
-            </div>
           </div>
         </section>
 

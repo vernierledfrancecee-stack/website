@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const navLinks = [
@@ -37,20 +38,15 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group" aria-label="LEDX Énergie — Accueil">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-[#1a9e75] flex items-center justify-center font-bold text-white text-sm">
-                L
-              </div>
-              <div>
-                <span className="text-white font-bold text-lg leading-tight block">
-                  LEDX Énergie
-                </span>
-                <span className="text-[#1a9e75] text-xs font-medium leading-none">
-                  Certificats CEE
-                </span>
-              </div>
-            </div>
+          <Link href="/" className="flex items-center" aria-label="LEDX Énergie — Accueil">
+            <Image
+              src="/logo.svg"
+              alt="LEDX Énergie"
+              width={160}
+              height={36}
+              priority
+              className="h-9 w-auto brightness-0 invert"
+            />
           </Link>
 
           {/* Desktop navigation */}

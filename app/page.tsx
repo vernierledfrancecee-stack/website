@@ -3,6 +3,7 @@ import Link from "next/link";
 import CounterSection from "@/components/home/CounterSection";
 import ProcessTimeline from "@/components/home/ProcessTimeline";
 import ProductCards from "@/components/home/ProductCards";
+import HeroSlider from "@/components/home/HeroSlider";
 
 export const metadata: Metadata = {
   title: "LEDX Énergie — Financez vos projets d'efficacité énergétique à 0 €",
@@ -13,71 +14,8 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <div className="pt-16 lg:pt-20">
-      {/* ── HERO ───────────────────────────────────────────────────── */}
-      <section className="relative bg-[#0d1e3a] overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-[#1a9e75]/10 blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-[#1a3460]/50 blur-2xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#1a9e75]/5 blur-3xl" />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-[#1a9e75]/20 border border-[#1a9e75]/30 rounded-full px-4 py-1.5 mb-8">
-              <div className="w-2 h-2 rounded-full bg-[#1a9e75] animate-pulse" />
-              <span className="text-[#1a9e75] text-sm font-semibold">
-                9 000+ projets réalisés en France
-              </span>
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              Financez vos projets
-              <br />
-              <span className="text-[#1a9e75]">d&apos;efficacité énergétique</span>
-              <br />à 0 €
-            </h1>
-
-            <p className="text-lg text-white/70 leading-relaxed mb-10 max-w-2xl">
-              LEDX Énergie monte vos dossiers CEE de A à Z —
-              LED, pompes à chaleur, serres agricoles, froid commercial.
-              Vous ne payez rien, nous orchestrons tout.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/simulateur"
-                className="inline-flex items-center justify-center gap-2 bg-[#1a9e75] hover:bg-[#147a5b] text-white font-bold px-8 py-4 rounded-xl text-base transition-all duration-200 shadow-lg hover:shadow-xl"
-              >
-                Tester mon éligibilité
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-              <Link
-                href="/realisations"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200"
-              >
-                Voir nos réalisations
-              </Link>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-6 mt-12 pt-10 border-t border-white/10">
-              {[
-                "Dossiers 100% pris en charge",
-                "Aucune avance de fonds",
-                "Présent partout en France",
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-2 text-white/60 text-sm">
-                  <svg className="w-4 h-4 text-[#1a9e75]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── HERO SLIDER ─────────────────────────────────────────────── */}
+      <HeroSlider />
 
       {/* ── COMPTEURS ──────────────────────────────────────────────── */}
       <CounterSection />

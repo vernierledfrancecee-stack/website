@@ -11,6 +11,7 @@ interface Realisation {
   description: string;
   localisation?: string;
   details?: string[];
+  photo?: string; // chemin vers /public/realisations/
 }
 
 const realisations: Realisation[] = [
@@ -176,29 +177,60 @@ export default function RealisationsGallery() {
         {filtered.map((r) => (
           <div
             key={r.id}
-            className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-md hover:border-gray-200 transition-all"
+            className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-lg hover:border-gray-200 hover:-translate-y-1 transition-all duration-300"
           >
-            {/* Header coloré */}
-            <div className={`h-3 ${
-              r.categorie === "led" ? "bg-amber-400" :
-              r.categorie === "pac-tertiaire" ? "bg-blue-500" :
-              r.categorie === "pac-residentiel" ? "bg-indigo-500" :
-              r.categorie === "froid" ? "bg-cyan-500" :
-              "bg-[#1a9e75]"
-            }`} />
+            {/* Visuel */}
+            {r.photo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={r.photo}
+                alt={r.titre}
+                className="w-full h-48 object-cover"
+              />
+            ) : (
+              <div className={`h-48 flex items-center justify-center relative overflow-hidden ${
+                r.categorie === "led"
+                  ? "bg-gradient-to-br from-amber-950 to-amber-900"
+                  : r.categorie === "pac-tertiaire"
+                  ? "bg-gradient-to-br from-[#0d1e3a] to-[#1a3460]"
+                  : r.categorie === "pac-residentiel"
+                  ? "bg-gradient-to-br from-indigo-950 to-indigo-900"
+                  : r.categorie === "froid"
+                  ? "bg-gradient-to-br from-cyan-950 to-cyan-900"
+                  : "bg-gradient-to-br from-[#0d2e20] to-[#0d1e3a]"
+              }`}>
+                {/* Subtle grid */}
+                <div className="absolute inset-0 opacity-10"
+                  style={{backgroundImage:"linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px)",backgroundSize:"24px 24px"}}
+                />
+                {/* Big icon */}
+                <span className="text-7xl relative z-10 drop-shadow-2xl opacity-80" role="img" aria-label={r.secteur}>
+                  {categorieIcons[r.categorie]}
+                </span>
+                {/* Glow */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                {/* Localisation overlay */}
+                {r.localisation && (
+                  <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-black/40 backdrop-blur-sm rounded-full px-3 py-1">
+                    <svg className="w-3 h-3 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span className="text-white/80 text-xs font-medium">{r.localisation}</span>
+                  </div>
+                )}
+              </div>
+            )}
 
             <div className="p-6">
-              <div className="flex items-start justify-between gap-2 mb-3">
-                <div className="text-2xl">{categorieIcons[r.categorie]}</div>
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <p className="text-xs text-[#2c2c2a]/50 font-medium">{r.secteur}</p>
                 <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${categorieColors[r.categorie]}`}>
                   {r.fiche}
                 </span>
               </div>
 
-              <h3 className="font-bold text-[#0d1e3a] text-lg mb-1">{r.titre}</h3>
-              <p className="text-xs text-[#2c2c2a]/50 mb-3">
-                {r.secteur}{r.localisation ? ` — ${r.localisation}` : ""}
-              </p>
+              <h3 className="font-bold text-[#0d1e3a] text-lg mb-2">{r.titre}</h3>
               <p className="text-sm text-[#2c2c2a]/70 leading-relaxed mb-4">{r.description}</p>
 
               {r.details && (

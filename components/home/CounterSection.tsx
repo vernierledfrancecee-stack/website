@@ -10,10 +10,10 @@ interface Counter {
 }
 
 const counters: Counter[] = [
-  { label: "Projets réalisés", value: 9000, suffix: "+", prefix: "" },
-  { label: "Dossiers pris en charge", value: 100, suffix: "%", prefix: "" },
+  { label: "Sites équipés", value: 9000, suffix: "+", prefix: "" },
+  { label: "kWh économisés", value: 2300000, suffix: "+", prefix: "" },
   { label: "Avance de fonds demandée", value: 0, suffix: " €", prefix: "" },
-  { label: "Fiches CEE maîtrisées", value: 6, suffix: "", prefix: "" },
+  { label: "Dossiers pris en charge", value: 100, suffix: "%", prefix: "" },
 ];
 
 function useCountUp(target: number, duration = 1500, start = false) {

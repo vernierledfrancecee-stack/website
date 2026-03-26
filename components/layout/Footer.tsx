@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LedxLogo from "@/components/LedxLogo";
 
 const fichesLinks = [
   { href: "/solutions#led", label: "LED Intérieur (BAT-EQ-127)" },
@@ -24,27 +25,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Colonne 1 — Identité */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-[#1a9e75] flex items-center justify-center font-bold text-white text-sm">
-                L
-              </div>
-              <div>
-                <span className="text-white font-bold text-lg leading-tight block">
-                  LEDX Énergie
-                </span>
-                <span className="text-[#1a9e75] text-xs font-medium">Certificats CEE</span>
-              </div>
-            </div>
-            <p className="text-white/60 text-sm leading-relaxed mb-4">
+            <LedxLogo variant="light" className="text-sm mb-4" />
+            <p className="text-white/60 text-sm leading-relaxed">
               Développeur d&apos;opérations CEE — nous montons vos dossiers de A à Z.
               9 000+ projets réalisés partout en France depuis 2023.
             </p>
-            <div className="flex items-center gap-1 text-[#1a9e75] text-xs font-medium">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              OPQIBI n°23 04 5139
-            </div>
           </div>
 
           {/* Colonne 2 — Nos Fiches CEE */}

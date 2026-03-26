@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
+import LedxLogo from "@/components/LedxLogo";
 
 const navLinks = [
   { href: "/solutions", label: "Nos Solutions" },
@@ -39,14 +39,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center" aria-label="LEDX Énergie — Accueil">
-            <Image
-              src="/logo.svg"
-              alt="LEDX Énergie"
-              width={160}
-              height={36}
-              priority
-              className="h-9 w-auto brightness-0 invert"
-            />
+            <LedxLogo variant="light" className="text-sm" />
           </Link>
 
           {/* Desktop navigation */}

@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import HeroSlider from "@/components/home/HeroSlider";
 import CounterSection from "@/components/home/CounterSection";
 import ChoixParProfil from "@/components/home/ChoixParProfil";
-import PacHero from "@/components/home/PacHero";
-import FroidSection from "@/components/home/FroidSection";
-import AgriSection from "@/components/home/AgriSection";
+import ProduitsSlider from "@/components/home/ProduitsSlider";
 import LedSocialProof from "@/components/home/LedSocialProof";
 import PourquoiGratuit from "@/components/home/PourquoiGratuit";
 import CarteRealisations from "@/components/home/CarteRealisations";
@@ -28,14 +26,8 @@ export default function HomePage() {
       {/* ── CHOIX PAR PROFIL ──────────────────────────────────────── */}
       <ChoixParProfil />
 
-      {/* ── PAC — PRODUIT PHARE ───────────────────────────────────── */}
-      <PacHero />
-
-      {/* ── FROID COMMERCIAL ──────────────────────────────────────── */}
-      <FroidSection />
-
-      {/* ── AGRICULTURE ───────────────────────────────────────────── */}
-      <AgriSection />
+      {/* ── PRODUITS CEE — SLIDER ─────────────────────────────────── */}
+      <ProduitsSlider />
 
       {/* ── LED — PREUVE SOCIALE ──────────────────────────────────── */}
       <LedSocialProof />

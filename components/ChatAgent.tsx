@@ -250,9 +250,9 @@ export default function ChatAgent() {
     <>
       {/* Bouton flottant */}
       <div className="fixed z-50 flex flex-col items-end gap-3" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 1.5rem)", right: "1.5rem" }}>
-        {/* Bulle de notification */}
+        {/* Bulle de notification — masquée sur mobile */}
         {!open && notif && (
-          <div className="bg-white text-[#0d1e3a] text-sm font-medium px-4 py-2.5 rounded-2xl rounded-br-sm shadow-lg border border-gray-100 max-w-[220px] animate-[slideIn_0.4s_ease-out]">
+          <div className="hidden sm:block bg-white text-[#0d1e3a] text-sm font-medium px-4 py-2.5 rounded-2xl rounded-br-sm shadow-lg border border-gray-100 max-w-[220px] animate-[slideIn_0.4s_ease-out]">
             💬 Un expert LEDX vous répond !
           </div>
         )}

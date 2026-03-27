@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function HeroSlider() {
   return (
-    <section className="relative bg-[#0d1e3a] overflow-hidden min-h-screen flex flex-col justify-end sm:justify-center">
+    <section className="relative bg-[#0d1e3a] overflow-hidden sm:min-h-screen sm:flex sm:flex-col sm:justify-center">
       {/* Fond décoratif */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-gradient-radial from-[#1a9e75]/15 to-transparent blur-3xl" />
@@ -17,7 +17,7 @@ export default function HeroSlider() {
         />
       </div>
 
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16 sm:py-28">
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-12 sm:py-28">
         {/* Surtitre */}
         <div className="mb-5 sm:mb-6">
           <span className="inline-flex items-center gap-2 text-[#1a9e75] text-sm sm:text-base font-semibold">

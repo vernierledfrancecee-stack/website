@@ -15,7 +15,7 @@ const profils = [
     desc: "Froid commercial, agroalimentaire, entrepôts frigorifiques",
     href: "/solutions/froid-commercial",
     badge: "Industrie & Froid",
-    photo: "https://images.unsplash.com/photo-1565343417-31b2f3802d5b?auto=format&fit=crop&w=600&q=75",
+    photo: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=600&q=75",
     alt: "Entrepôt industriel",
   },
   {

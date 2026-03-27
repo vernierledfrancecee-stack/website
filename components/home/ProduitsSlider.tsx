@@ -65,7 +65,7 @@ const slides = [
     ],
     tags: ["🏪 GMS", "🏭 Entrepôts frigo", "🥩 Agroalimentaire", "🏨 Hôtellerie", "🚛 Logistique"],
     tagLabel: "Secteurs concernés",
-    photo: "https://images.unsplash.com/photo-1565343417-31b2f3802d5b?auto=format&fit=crop&w=600&q=75",
+    photo: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=600&q=75",
   },
   {
     id: "agri",

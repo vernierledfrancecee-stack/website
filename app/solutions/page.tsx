@@ -3,13 +3,12 @@ import Link from "next/link";
 import RenovGlobaleSection from "@/components/solutions/RenovGlobaleSection";
 
 export const metadata: Metadata = {
-  title: "Nos Solutions CEE — LED, PAC, Régulation Froid, Agriculture",
+  title: "Nos Solutions CEE — PAC, Régulation Froid, Agriculture, Rénovation Globale",
   description:
-    "Découvrez les 6 fiches CEE maîtrisées par LEDX Énergie : BAT-EQ-127 LED, BAT-TH-163 PAC tertiaire, BAR-TH-179 PAC résidentiel, BAT-TH-134/145 froid, AGRI-108/117/119 serres. + Rénovation Globale Tertiaire (bientôt).",
+    "Découvrez les fiches CEE maîtrisées par LEDX Énergie : BAT-TH-163 PAC tertiaire, BAR-TH-179 PAC résidentiel, BAT-TH-134/145 froid, AGRI-108/117/119 serres, Rénovation Globale Tertiaire.",
 };
 
 const navSections = [
-  { id: "led", label: "LED Intérieur" },
   { id: "pac-tertiaire", label: "PAC Tertiaire" },
   { id: "pac-residentiel", label: "PAC Résidentiel" },
   { id: "regulation-froid", label: "Régulation Froid" },
@@ -24,14 +23,14 @@ export default function SolutionsPage() {
       <div className="bg-[#0d1e3a] py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-block bg-[#1a9e75]/20 border border-[#1a9e75]/30 text-[#1a9e75] text-sm font-semibold px-4 py-1.5 rounded-full mb-6">
-            6 fiches CEE maîtrisées
+            5 fiches CEE + Rénovation Globale
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Nos Solutions CEE
+            Nos dossiers CEE
           </h1>
           <p className="text-white/70 max-w-2xl mx-auto">
-            LEDX Énergie intervient sur les fiches à plus fort potentiel d&apos;économies pour vos bâtiments
-            tertiaires, industriels, résidentiels et agricoles.
+            LEDX monte vos dossiers CEE de A à Z sur les fiches à plus fort potentiel d&apos;économies —
+            PAC, froid commercial, agriculture, rénovation globale.
           </p>
         </div>
       </div>
@@ -66,60 +65,6 @@ export default function SolutionsPage() {
 
           {/* Contenu */}
           <main className="flex-1 space-y-20">
-            {/* ── LED ──────────────────────────────────────────── */}
-            <section id="led" className="scroll-mt-24">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-2xl">💡</div>
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="inline-block bg-[#0d1e3a] text-white text-xs font-mono font-bold px-2.5 py-1 rounded">BAT-EQ-127</span>
-                    <span className="inline-block bg-[#1a9e75]/20 text-[#1a9e75] text-xs font-bold px-2 py-0.5 rounded">Notre ADN — 9 000+ réalisations</span>
-                  </div>
-                  <h2 className="text-2xl font-bold text-[#0d1e3a]">Remplacement d&apos;éclairage LED</h2>
-                </div>
-              </div>
-
-              <div className="prose prose-sm max-w-none text-[#2c2c2a]/70 mb-6">
-                <p>
-                  Remplacement de tous types de sources lumineuses (néon, fluocompact, halogène, mercure)
-                  par des LED haute performance. LEDX Énergie est le leader français du remplacement LED
-                  en milieu professionnel avec plus de 9 000 réalisations depuis 2023.
-                </p>
-                <p>
-                  <strong className="text-[#0d1e3a]">Secteurs couverts :</strong> industrie, tertiaire, agriculture,
-                  commerce, entrepôts, parkings, établissements de santé, hôtellerie.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                {[
-                  { label: "Économies consommation", value: "-70%", color: "text-[#1a9e75]" },
-                  { label: "Durée de vie LED", value: "50 000h", color: "text-[#0d1e3a]" },
-                  { label: "Avance de fonds", value: "0 €", color: "text-[#1a9e75]" },
-                ].map((stat) => (
-                  <div key={stat.label} className="bg-[#f8f9fa] rounded-xl p-4 text-center">
-                    <div className={`text-3xl font-bold mb-1 ${stat.color}`}>{stat.value}</div>
-                    <div className="text-xs text-[#2c2c2a]/60">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="bg-[#f8f9fa] rounded-xl p-5">
-                <h3 className="font-bold text-[#0d1e3a] text-sm mb-3">Éligibilité & processus</h3>
-                <p className="text-sm text-[#2c2c2a]/60 mb-3">
-                  Tout bâtiment non résidentiel avec éclairage non-LED est éligible à la fiche BAT-EQ-127.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Audit lumineux gratuit", "Dimensionnement LED", "Devis 0 €", "Installation partenaire", "Dossier CEE"].map((step, i) => (
-                    <div key={step} className="flex items-center gap-1">
-                      {i > 0 && <span className="text-gray-300">→</span>}
-                      <span className="text-xs bg-white border border-gray-200 text-[#2c2c2a]/70 px-3 py-1.5 rounded-full">{step}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
             {/* ── PAC TERTIAIRE ─────────────────────────────────── */}
             <section id="pac-tertiaire" className="scroll-mt-24">
               <div className="flex items-center gap-3 mb-6">

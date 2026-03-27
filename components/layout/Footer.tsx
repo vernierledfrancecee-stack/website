@@ -2,7 +2,6 @@ import Link from "next/link";
 import LedxLogo from "@/components/LedxLogo";
 
 const fichesLinks = [
-  { href: "/solutions#led", label: "LED Intérieur (BAT-EQ-127)" },
   { href: "/solutions#pac-tertiaire", label: "PAC Tertiaire (BAT-TH-163)" },
   { href: "/solutions#pac-residentiel", label: "PAC Résidentiel (BAR-TH-179)" },
   { href: "/solutions#regulation-froid", label: "Régulation Froid (BAT-TH-134/145)" },

@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 type Role = "bot" | "user";
 type StepId =
   | "start" | "menu" | "cee_explication" | "cout" | "eligibilite_secteur"
-  | "eligibilite_eclairage" | "eligibilite_chauffage" | "lead_prenom"
+  | "eligibilite_froid" | "eligibilite_eclairage" | "eligibilite_chauffage" | "lead_prenom"
   | "lead_telephone" | "lead_secteur_libre" | "done" | "autre_question" | "autre_reponse";
 
 interface Message {
@@ -41,7 +41,7 @@ const FLOW: Record<StepId, Step> = {
   cee_explication: {
     bot: [
       "Les CEE (Certificats d'Économies d'Énergie) obligent les fournisseurs d'énergie — EDF, Total, Engie… — à financer des travaux d'efficacité énergétique chez leurs clients professionnels.",
-      "LEDX monte votre dossier, coordonne l'installation et obtient ce financement pour vous. Résultat : 0 € à débourser de votre côté. C'est un dispositif légal encadré par l'ADEME depuis 2006.",
+      "LEDX monte votre dossier CEE de A à Z et vous accompagne jusqu'aux certificats. Nos partenaires RGE réalisent les travaux. Résultat : 0 € à débourser de votre côté. Dispositif légal encadré par l'ADEME depuis 2006.",
       "Vous voulez savoir si votre site est éligible ?",
     ],
     options: [
@@ -65,11 +65,17 @@ const FLOW: Record<StepId, Step> = {
   eligibilite_secteur: {
     bot: ["Quel est votre secteur d'activité ?"],
     options: [
-      { label: "🏭 Industrie / Entrepôt / Logistique", next: "eligibilite_eclairage", value: "industrie" },
-      { label: "🏢 Tertiaire (bureaux, santé, hôtel…)", next: "eligibilite_chauffage", value: "tertiaire" },
-      { label: "🛒 Commerce / GMS / Agroalimentaire", next: "eligibilite_eclairage", value: "commerce" },
-      { label: "🌿 Agriculture / Serres maraîchères", next: "eligibilite_eclairage", value: "agricole" },
-      { label: "🏠 Résidentiel collectif", next: "eligibilite_chauffage", value: "residentiel" },
+      { label: "🏢 Entreprise / Tertiaire (bureaux, santé, hôtel…)", next: "eligibilite_chauffage", value: "tertiaire" },
+      { label: "🏭 Industrie / GMS / Entrepôt frigorifique", next: "eligibilite_froid", value: "industrie" },
+      { label: "🌿 Agriculture / Serres maraîchères", next: "lead_prenom", value: "agricole" },
+      { label: "🏠 Copropriété / Résidentiel collectif", next: "eligibilite_chauffage", value: "residentiel" },
+    ],
+  },
+  eligibilite_froid: {
+    bot: ["Avez-vous des installations frigorifiques (chambres froides, vitrines réfrigérées, entrepôts froid) ?"],
+    options: [
+      { label: "Oui, je gère des installations froid", next: "lead_prenom", value: "froid-oui" },
+      { label: "Non, pas d'installations froid", next: "eligibilite_chauffage", value: "froid-non" },
     ],
   },
   eligibilite_eclairage: {

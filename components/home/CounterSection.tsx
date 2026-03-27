@@ -10,10 +10,10 @@ interface Counter {
 }
 
 const counters: Counter[] = [
-  { label: "Sites équipés", value: 9000, suffix: "+" },
-  { label: "kWh économisés", value: 2300000, suffix: "+" },
-  { label: "Avance demandée", value: 0, suffix: " €" },
-  { label: "Dossiers gérés", value: 100, suffix: "%" },
+  { label: "Sites industriels & tertiaires", value: 9000, suffix: "+" },
+  { label: "kWh d'économies générées", value: 2300000, suffix: "+" },
+  { label: "d'avance requise", value: 0, suffix: " €" },
+  { label: "Dossiers pris en charge", value: 100, suffix: "%" },
 ];
 
 function useCountUp(target: number, duration = 1500, start = false) {

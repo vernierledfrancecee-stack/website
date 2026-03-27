@@ -55,11 +55,11 @@ export default function HeroSlider() {
         </div>
 
         {/* Stats — épurées, pas dans un box */}
-        <div className="flex items-center gap-8 sm:gap-14 mt-16 sm:mt-20 pt-10 sm:pt-12 border-t border-white/10">
+        <div className="flex items-center gap-6 sm:gap-14 mt-14 sm:mt-20 pt-8 sm:pt-12 border-t border-white/10 pr-16 sm:pr-0">
           {[
             { value: "9 000+", label: "projets réalisés" },
             { value: "80+", label: "départements" },
-            { value: "depuis 2020", label: "en activité" },
+            { value: "2020", label: "fondé en" },
           ].map((s) => (
             <div key={s.label}>
               <div className="text-xl sm:text-2xl font-bold text-white">{s.value}</div>

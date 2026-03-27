@@ -4,11 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const typesClient = [
-  { value: "", label: "Vous êtes…" },
-  { value: "entreprise-tertiaire", label: "Entreprise / Tertiaire" },
-  { value: "industrie-gms", label: "Industrie / GMS" },
-  { value: "exploitation-agricole", label: "Exploitation agricole" },
-  { value: "copropriete-bailleur", label: "Copropriété / Bailleur" },
+  { value: "", label: "Type d'organisation…" },
+  { value: "groupe-immobilier", label: "Groupe immobilier / Foncière" },
+  { value: "industrie-gms", label: "Groupe industriel / GMS" },
+  { value: "collectivite", label: "Collectivité / Institution publique" },
+  { value: "cooperative-agricole", label: "Coopérative / Groupe agricole" },
 ];
 
 export default function MiniLeadForm() {
@@ -56,10 +56,10 @@ export default function MiniLeadForm() {
             <span className="text-[#1a9e75] text-sm font-semibold">Gratuit · Sans engagement</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3">
-            À quelles aides avez-vous droit ?
+            Analysons votre potentiel CEE
           </h2>
           <p className="text-white/60 text-sm sm:text-base">
-            Répondez à 3 questions. Résultats immédiats, sans engagement.
+            Première analyse confidentielle sous 24h. Aucun engagement.
           </p>
         </div>
 
@@ -92,7 +92,7 @@ export default function MiniLeadForm() {
               {/* Téléphone */}
               <input
                 type="tel"
-                placeholder="Votre téléphone"
+                placeholder="Ligne directe / mobile pro"
                 value={form.telephone}
                 onChange={(e) => setForm({ ...form, telephone: e.target.value })}
                 className="w-full bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-4 text-sm focus:outline-none focus:border-[#1a9e75] transition-colors"
@@ -100,7 +100,7 @@ export default function MiniLeadForm() {
               {/* Surface */}
               <input
                 type="number"
-                placeholder="Surface approx. (m²)"
+                placeholder="Nb de sites approximatif"
                 value={form.surface}
                 onChange={(e) => setForm({ ...form, surface: e.target.value })}
                 min="0"
@@ -113,13 +113,13 @@ export default function MiniLeadForm() {
               disabled={loading}
               className="w-full bg-[#1a9e75] hover:bg-[#147a5b] active:scale-[0.98] disabled:opacity-60 text-white font-bold px-7 py-4 rounded-xl text-base transition-all shadow-xl hover:shadow-[#1a9e75]/30"
             >
-              {loading ? "Envoi…" : "Découvrir mes droits CEE →"}
+              {loading ? "Envoi…" : "Demander une analyse de parc →"}
             </button>
           </form>
         )}
 
         <p className="text-center text-white/30 text-xs mt-5">
-          Aucun démarchage · Étude confidentielle · Réponse sous 48h
+          Analyse confidentielle · Réponse sous 24h · 0 € de frais
         </p>
       </div>
     </section>

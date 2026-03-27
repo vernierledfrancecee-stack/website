@@ -37,45 +37,37 @@ export default function LedSocialProof() {
           Ceux qui ont agi ont réalisé des économies massives. Les autres ont attendu.
         </p>
 
-        {/* Timeline */}
-        <div className="relative mb-10 sm:mb-14">
-          {/* Ligne de connexion desktop */}
-          <div className="hidden sm:block absolute top-4 left-[16.7%] right-[16.7%] h-0.5 bg-white/10" />
+        {/* Timeline — horizontal sur mobile ET desktop */}
+        <div className="relative mb-10 sm:mb-14 px-2">
+          {/* Ligne de connexion */}
+          <div className="absolute top-4 left-[16%] right-[16%] h-0.5 bg-white/10" />
+          {/* Ligne animée de progression */}
+          <div
+            className="absolute top-4 left-[16%] h-0.5 bg-gradient-to-r from-white/30 via-[#1a9e75] to-[#1a9e75]"
+            style={{ right: "16%", animation: "grow-line 1.5s ease-out forwards", width: 0 }}
+          />
+          <style>{`
+            @keyframes grow-line {
+              from { width: 0; }
+              to { width: calc(100% - 32%); }
+            }
+          `}</style>
 
-          {/* Mobile : liste verticale */}
-          <div className="sm:hidden flex flex-col gap-0 max-w-xs mx-auto">
+          <div className="grid grid-cols-3 gap-0">
             {timeline.map((t, idx) => (
-              <div key={t.year} className="flex items-start gap-4">
-                <div className="flex flex-col items-center">
-                  <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                    t.active ? "bg-[#1a9e75] border-[#1a9e75]" : "bg-[#0d1e3a] border-white/20"
-                  }`}>
-                    {t.active
-                      ? <div className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />
-                      : <div className="w-2 h-2 rounded-full bg-white/25" />}
-                  </div>
-                  {idx < timeline.length - 1 && (
-                    <div className="w-0.5 h-8 bg-white/10 my-1" />
-                  )}
-                </div>
-                <div className="pt-1 pb-4">
-                  <div className={`text-sm font-bold ${t.active ? "text-[#1a9e75]" : "text-white/50"}`}>{t.year}</div>
-                  <div className={`text-xs leading-snug ${t.active ? "text-white font-medium" : "text-white/35"}`}>{t.label}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Desktop : grille horizontale */}
-          <div className="hidden sm:grid grid-cols-3 gap-0">
-            {timeline.map((t, idx) => (
-              <div key={t.year} className="relative flex flex-col items-center">
+              <div key={t.year} className="relative flex flex-col items-center"
+                style={{ animation: `fade-up 0.5s ease-out ${idx * 0.3}s both` }}>
+                <style>{`
+                  @keyframes fade-up {
+                    from { opacity: 0; transform: translateY(8px); }
+                    to { opacity: 1; transform: translateY(0); }
+                  }
+                `}</style>
                 {idx < timeline.length - 1 && (
                   <div className="absolute top-4 left-1/2 w-full h-0.5 bg-white/10" />
                 )}
-                {/* Dot */}
                 <div
-                  className={`w-8 h-8 rounded-full border-2 flex items-center justify-center mb-3 relative z-10 ${
+                  className={`w-8 h-8 rounded-full border-2 flex items-center justify-center mb-3 relative z-10 transition-all ${
                     t.active
                       ? "bg-[#1a9e75] border-[#1a9e75] shadow-lg shadow-[#1a9e75]/40"
                       : "bg-[#0d1e3a] border-white/20"
@@ -87,24 +79,16 @@ export default function LedSocialProof() {
                     <div className="w-2 h-2 rounded-full bg-white/25" />
                   )}
                 </div>
-                <div
-                  className={`text-sm font-bold mb-1 ${
-                    t.active ? "text-[#1a9e75]" : "text-white/50"
-                  }`}
-                >
+                <div className={`text-xs sm:text-sm font-bold mb-1 ${t.active ? "text-[#1a9e75]" : "text-white/50"}`}>
                   {t.year}
                 </div>
-                <div
-                  className={`text-xs text-center leading-snug ${
-                    t.active ? "text-white font-medium" : "text-white/35"
-                  }`}
-                >
+                <div className={`text-[10px] sm:text-xs text-center leading-snug px-1 ${t.active ? "text-white font-medium" : "text-white/35"}`}>
                   {t.label}
                 </div>
               </div>
             ))}
           </div>
-          </div>
+        </div>
 
         {/* Punchline */}
         <div className="bg-white/5 border border-white/10 rounded-2xl px-6 sm:px-8 py-5 sm:py-6 mb-8 sm:mb-10 max-w-2xl mx-auto">

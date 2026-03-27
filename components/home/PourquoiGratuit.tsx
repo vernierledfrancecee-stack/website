@@ -45,24 +45,37 @@ const objections = [
 
 export default function PourquoiGratuit() {
   return (
-    <section className="bg-[#f8f9fa] py-16 sm:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="bg-[#f8f9fa] py-14 sm:py-24 overflow-hidden">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-8 sm:mb-12 px-4 sm:px-6 lg:px-8">
           <div className="inline-block bg-[#1a9e75]/12 text-[#1a9e75] text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
             Transparence totale
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0d1e3a] mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0d1e3a] mb-3">
             Pourquoi l'État finance vos travaux ?
           </h2>
           <p className="text-[#2c2c2a]/60 max-w-2xl mx-auto text-sm sm:text-base">
             Beaucoup de professionnels pensent qu'il y a un piège. Il n'y en a pas.
-            Voici la réalité du dispositif CEE.
           </p>
         </div>
 
-        {/* 3 blocs */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 mb-16 sm:mb-20">
+        {/* 3 blocs — carousel mobile, grid desktop */}
+        {/* Mobile */}
+        <div className="sm:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide px-4 pb-4">
+          {blocs.map((b) => (
+            <div key={b.titre} className="bg-white rounded-2xl p-5 border border-gray-100 relative w-[80vw] shrink-0 snap-center">
+              <div className="absolute -top-3 -left-3 w-7 h-7 rounded-full bg-[#0d1e3a] text-white text-xs font-bold flex items-center justify-center">
+                {b.num}
+              </div>
+              <span className="text-2xl mb-3 block">{b.icon}</span>
+              <h3 className="font-bold text-[#0d1e3a] text-sm mb-2">{b.titre}</h3>
+              <p className="text-[#2c2c2a]/60 text-xs leading-relaxed">{b.texte}</p>
+            </div>
+          ))}
+        </div>
+        {/* Desktop */}
+        <div className="hidden sm:grid grid-cols-3 gap-5 sm:gap-6 mb-14 px-4 sm:px-6 lg:px-8">
           {blocs.map((b) => (
             <div key={b.titre} className="bg-white rounded-2xl p-6 sm:p-7 border border-gray-100 relative">
               <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-[#0d1e3a] text-white text-xs font-bold flex items-center justify-center">
@@ -76,17 +89,32 @@ export default function PourquoiGratuit() {
         </div>
 
         {/* Objections */}
-        <div className="max-w-3xl mx-auto">
-          <h3 className="text-lg sm:text-xl font-bold text-[#0d1e3a] text-center mb-7 sm:mb-8">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <h3 className="text-base sm:text-xl font-bold text-[#0d1e3a] text-center mb-5 sm:mb-7">
             Ils pensaient que c'était une arnaque…
           </h3>
-          <div className="space-y-4">
+
+          {/* Mobile: carousel */}
+          <div className="sm:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-4 px-4 pb-4">
+            {objections.map((obj) => (
+              <div key={obj.q} className="bg-white rounded-xl border border-gray-100 p-4 w-[78vw] shrink-0 snap-center">
+                <div className="flex items-start gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-amber-100 text-amber-600 text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">?</div>
+                  <div>
+                    <p className="font-semibold text-[#0d1e3a] text-xs mb-1.5">{obj.q}</p>
+                    <p className="text-[#2c2c2a]/65 text-xs leading-relaxed">{obj.a}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: stacked */}
+          <div className="hidden sm:block max-w-3xl mx-auto space-y-4">
             {objections.map((obj) => (
               <div key={obj.q} className="bg-white rounded-xl border border-gray-100 p-5">
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-amber-100 text-amber-600 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
-                    ?
-                  </div>
+                  <div className="w-6 h-6 rounded-full bg-amber-100 text-amber-600 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">?</div>
                   <div>
                     <p className="font-semibold text-[#0d1e3a] text-sm sm:text-base mb-2">{obj.q}</p>
                     <p className="text-[#2c2c2a]/65 text-sm leading-relaxed">{obj.a}</p>
@@ -99,7 +127,7 @@ export default function PourquoiGratuit() {
           <div className="mt-8 sm:mt-10 text-center">
             <Link
               href="/simulateur"
-              className="inline-flex items-center gap-2 bg-[#1a9e75] hover:bg-[#147a5b] active:scale-95 text-white font-bold px-8 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center gap-2 bg-[#1a9e75] hover:bg-[#147a5b] active:scale-95 text-white font-bold px-8 py-4 rounded-xl transition-all duration-200 shadow-lg"
             >
               Voir si mon projet est éligible
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

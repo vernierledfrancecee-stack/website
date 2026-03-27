@@ -114,7 +114,7 @@ export default function ProduitsSlider() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 sm:gap-3 justify-center mb-8 sm:mb-10 overflow-x-auto pb-1 scrollbar-hide">
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:justify-center mb-8 sm:mb-10">
           {slides.map((s, i) => (
             <button
               key={s.id}

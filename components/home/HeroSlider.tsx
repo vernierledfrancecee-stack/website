@@ -15,7 +15,7 @@ export default function HeroSlider() {
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0d1e3a]/60 via-transparent to-[#0d1e3a]/80" />
 
-      <div className="relative w-full max-w-5xl mx-auto px-6 sm:px-10 lg:px-8 py-24 sm:py-32">
+      <div className="relative w-full max-w-5xl mx-auto px-6 sm:px-10 lg:px-8 pt-6 pb-16 sm:py-28">
 
         {/* Credential badge */}
         <div className="flex items-center gap-2.5 mb-10 sm:mb-12">
@@ -55,7 +55,7 @@ export default function HeroSlider() {
         </div>
 
         {/* Stats — épurées, pas dans un box */}
-        <div className="flex items-center gap-6 sm:gap-14 mt-14 sm:mt-20 pt-8 sm:pt-12 border-t border-white/10 pr-16 sm:pr-0">
+        <div className="flex items-center gap-8 sm:gap-14 mt-12 sm:mt-20 pt-8 sm:pt-12 border-t border-white/10">
           {[
             { value: "9 000+", label: "projets réalisés" },
             { value: "80+", label: "départements" },

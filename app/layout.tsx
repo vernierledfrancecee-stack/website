@@ -11,6 +11,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import ChatAgent from "@/components/ChatAgent";
+import PageTracker from "@/components/PageTracker";
 
 export const metadata: Metadata = {
   title: {
@@ -69,6 +70,7 @@ export default function RootLayout({
         <Footer />
         <WhatsAppButton />
         <ChatAgent />
+        <PageTracker />
       </body>
     </html>
   );

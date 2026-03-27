@@ -14,7 +14,7 @@ export default function WhatsAppButton() {
 
   return (
     <a
-      href="https://wa.me/33159392571?text=Bonjour%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20les%20aides%20CEE%20avec%20LEDX%20%C3%89nergie."
+      href="https://wa.me/33743131455?text=Bonjour%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20les%20aides%20CEE%20avec%20LEDX%20%C3%89nergie."
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contacter LEDX Énergie sur WhatsApp"

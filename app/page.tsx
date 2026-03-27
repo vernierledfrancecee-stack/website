@@ -7,7 +7,7 @@ import FroidSection from "@/components/home/FroidSection";
 import AgriSection from "@/components/home/AgriSection";
 import LedSocialProof from "@/components/home/LedSocialProof";
 import PourquoiGratuit from "@/components/home/PourquoiGratuit";
-import TemoignagesSection from "@/components/home/TemoignagesSection";
+import CarteRealisations from "@/components/home/CarteRealisations";
 import MiniLeadForm from "@/components/home/MiniLeadForm";
 
 export const metadata: Metadata = {
@@ -43,8 +43,8 @@ export default function HomePage() {
       {/* ── POURQUOI CES AIDES EXISTENT ───────────────────────────── */}
       <PourquoiGratuit />
 
-      {/* ── TÉMOIGNAGES ────────────────────────────────────────────── */}
-      <TemoignagesSection />
+      {/* ── RÉALISATIONS EN FRANCE ─────────────────────────────────── */}
+      <CarteRealisations />
 
       {/* ── CTA GLOBAL ─────────────────────────────────────────────── */}
       <MiniLeadForm />

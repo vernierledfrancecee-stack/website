@@ -6,7 +6,7 @@ export default function HeroSlider() {
     <section className="relative bg-[#0d1e3a] overflow-hidden min-h-[100svh] flex flex-col justify-center">
       {/* Photo de fond */}
       <Image
-        src="https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1600&q=80"
+        src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80"
         alt=""
         fill
         className="object-cover opacity-[0.18]"

@@ -7,7 +7,7 @@ const profils = [
     desc: "Bureaux, établissements de santé, hôtellerie, enseignement, logistique grand compte",
     href: "/solutions/pac-tertiaire",
     badge: "Tertiaire",
-    photo: "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=600&q=75",
+    photo: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=75",
     alt: "Bâtiment tertiaire",
   },
   {

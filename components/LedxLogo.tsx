@@ -54,11 +54,8 @@ export default function LedxLogo({ variant = "light", size = "md", className = "
         </svg>
       </span>
 
-      {/* E exposant */}
-      <span style={{ fontSize: "0.55em", fontWeight: 900, color: "#2dc48d", letterSpacing: "0em", marginLeft: "0.15em", alignSelf: "flex-start", marginTop: "0.1em" }}>E</span>
-
       {/* Espace + ÉNERGIE */}
-      <span style={{ fontWeight: 700, marginLeft: "0.25em" }}>Énergie</span>
+      <span style={{ fontWeight: 700, marginLeft: "0.35em" }}>Énergie</span>
     </span>
   );
 }

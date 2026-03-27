@@ -20,7 +20,7 @@ export default function WhatsAppButton() {
       aria-label="Contacter LEDX Énergie sur WhatsApp"
       className="fixed z-50 flex items-center gap-2 bg-[#25D366] hover:bg-[#1da851] active:scale-95 text-white font-semibold p-3 sm:pl-3.5 sm:pr-4 sm:py-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 animate-[slideIn_0.4s_ease-out]"
       style={{
-        bottom: "calc(env(safe-area-inset-bottom, 0px) + 5.5rem)",
+        bottom: "calc(env(safe-area-inset-bottom, 0px) + 1.25rem)",
         left: "1rem",
       }}
     >

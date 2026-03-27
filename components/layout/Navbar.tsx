@@ -8,6 +8,7 @@ import LedxLogo from "@/components/LedxLogo";
 const navLinks = [
   { href: "/solutions", label: "Nos Solutions" },
   { href: "/realisations", label: "Réalisations" },
+  { href: "/articles", label: "Articles" },
   { href: "/a-propos", label: "À Propos" },
   { href: "/contact", label: "Contact" },
 ];

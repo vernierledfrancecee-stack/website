@@ -2,10 +2,10 @@ import Link from "next/link";
 import LedxLogo from "@/components/LedxLogo";
 
 const fichesLinks = [
-  { href: "/solutions#pac-tertiaire", label: "PAC Tertiaire (BAT-TH-163)" },
-  { href: "/solutions#pac-residentiel", label: "PAC Résidentiel (BAR-TH-179)" },
-  { href: "/solutions#regulation-froid", label: "Régulation Froid (BAT-TH-134/145)" },
-  { href: "/solutions#agri", label: "Agriculture Serres (AGRI-108/117/119)" },
+  { href: "/solutions/pac-tertiaire", label: "PAC Tertiaire (BAT-TH-163)" },
+  { href: "/solutions/pac-residentiel", label: "PAC Résidentiel (BAR-TH-179)" },
+  { href: "/solutions/froid-commercial", label: "Régulation Froid (BAT-TH-134/145)" },
+  { href: "/solutions/agriculture", label: "Agriculture Serres" },
 ];
 
 const siteLinks = [

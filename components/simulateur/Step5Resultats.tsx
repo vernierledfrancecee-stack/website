@@ -24,14 +24,14 @@ const categorieColors: Record<FicheEligible["categorie"], { bg: string; text: st
 };
 
 const solutionsLinks: Record<string, string> = {
-  "BAT-EQ-127": "/solutions#led",
-  "BAT-TH-163": "/solutions#pac-tertiaire",
-  "BAR-TH-179": "/solutions#pac-residentiel",
-  "BAT-TH-134": "/solutions#regulation-froid",
-  "BAT-TH-145": "/solutions#regulation-froid",
-  "AGRI-TH-119": "/solutions#agri",
-  "AGRI-TH-117": "/solutions#agri",
-  "AGRI-108": "/solutions#agri",
+  "BAT-EQ-127": "/solutions",
+  "BAT-TH-163": "/solutions/pac-tertiaire",
+  "BAR-TH-179": "/solutions/pac-residentiel",
+  "BAT-TH-134": "/solutions/froid-commercial",
+  "BAT-TH-145": "/solutions/froid-commercial",
+  "AGRI-TH-119": "/solutions/agriculture",
+  "AGRI-TH-117": "/solutions/agriculture",
+  "AGRI-108": "/solutions/agriculture",
 };
 
 export default function Step5Resultats({

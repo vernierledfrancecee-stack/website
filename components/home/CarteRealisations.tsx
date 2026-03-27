@@ -137,27 +137,52 @@ export default function CarteRealisations() {
             </div>
           </div>
 
-          {/* 3 sector columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3 gap-4">
-            {sectors.map((s) => (
-              <div
-                key={s.label}
-                className={`${s.bg} border ${s.border} rounded-2xl p-5`}
-              >
-                <span className="text-2xl mb-3 block">{s.icon}</span>
-                <div className={`text-2xl font-bold ${s.color} mb-0.5`}>{s.count}</div>
-                <div className="text-[#2c2c2a]/50 text-xs mb-3">{s.unit}</div>
-                <div className="font-semibold text-[#0d1e3a] text-sm mb-3">{s.label}</div>
-                <ul className="space-y-1">
-                  {s.items.map((item) => (
-                    <li key={item} className="flex items-start gap-1.5 text-xs text-[#2c2c2a]/60">
-                      <span className={`${s.color} font-bold shrink-0`}>·</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          {/* 3 sector cards — horizontal scroll on mobile, grid on desktop */}
+          <div>
+            {/* Mobile: horizontal scroll */}
+            <div className="sm:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-4 px-4 pb-2">
+              {sectors.map((s) => (
+                <div
+                  key={s.label}
+                  className={`${s.bg} border ${s.border} rounded-2xl p-5 w-[72vw] shrink-0 snap-center`}
+                >
+                  <span className="text-2xl mb-3 block">{s.icon}</span>
+                  <div className={`text-2xl font-bold ${s.color} mb-0.5`}>{s.count}</div>
+                  <div className="text-[#2c2c2a]/50 text-xs mb-3">{s.unit}</div>
+                  <div className="font-semibold text-[#0d1e3a] text-sm mb-3">{s.label}</div>
+                  <ul className="space-y-1">
+                    {s.items.map((item) => (
+                      <li key={item} className="flex items-start gap-1.5 text-xs text-[#2c2c2a]/60">
+                        <span className={`${s.color} font-bold shrink-0`}>·</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            {/* Desktop: grid */}
+            <div className="hidden sm:grid sm:grid-cols-3 gap-4">
+              {sectors.map((s) => (
+                <div
+                  key={s.label}
+                  className={`${s.bg} border ${s.border} rounded-2xl p-5`}
+                >
+                  <span className="text-2xl mb-3 block">{s.icon}</span>
+                  <div className={`text-2xl font-bold ${s.color} mb-0.5`}>{s.count}</div>
+                  <div className="text-[#2c2c2a]/50 text-xs mb-3">{s.unit}</div>
+                  <div className="font-semibold text-[#0d1e3a] text-sm mb-3">{s.label}</div>
+                  <ul className="space-y-1">
+                    {s.items.map((item) => (
+                      <li key={item} className="flex items-start gap-1.5 text-xs text-[#2c2c2a]/60">
+                        <span className={`${s.color} font-bold shrink-0`}>·</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

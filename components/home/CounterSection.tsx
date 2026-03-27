@@ -11,7 +11,6 @@ interface Counter {
 
 const counters: Counter[] = [
   { label: "Sites industriels & tertiaires", value: 9000, suffix: "+" },
-  { label: "kWh d'économies générées", value: 2300000, suffix: "+" },
   { label: "d'avance requise", value: 0, suffix: " €" },
   { label: "Dossiers pris en charge", value: 100, suffix: "%" },
 ];
@@ -63,7 +62,7 @@ export default function CounterSection() {
   return (
     <section className="bg-white py-10 sm:py-14 border-b border-gray-100" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 lg:gap-12">
+        <div className="grid grid-cols-3 gap-4 sm:gap-8 lg:gap-12">
           {counters.map((counter) => (
             <CounterItem key={counter.label} counter={counter} start={started} />
           ))}

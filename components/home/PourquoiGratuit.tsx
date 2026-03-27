@@ -62,13 +62,13 @@ export default function PourquoiGratuit() {
 
         {/* 3 blocs — carousel mobile, grid desktop */}
         {/* Mobile */}
-        <div className="sm:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide px-4 pb-4">
+        <div className="sm:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide px-4 pb-4 mb-4">
           {blocs.map((b) => (
-            <div key={b.titre} className="bg-white rounded-2xl p-5 border border-gray-100 relative w-[80vw] shrink-0 snap-center">
-              <div className="absolute -top-3 -left-3 w-7 h-7 rounded-full bg-[#0d1e3a] text-white text-xs font-bold flex items-center justify-center">
-                {b.num}
+            <div key={b.titre} className="bg-white rounded-2xl p-5 border border-gray-100 w-[80vw] shrink-0 snap-center">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-6 h-6 rounded-full bg-[#0d1e3a] text-white text-[10px] font-bold flex items-center justify-center shrink-0">{b.num}</span>
+                <span className="text-xl">{b.icon}</span>
               </div>
-              <span className="text-2xl mb-3 block">{b.icon}</span>
               <h3 className="font-bold text-[#0d1e3a] text-sm mb-2">{b.titre}</h3>
               <p className="text-[#2c2c2a]/60 text-xs leading-relaxed">{b.texte}</p>
             </div>

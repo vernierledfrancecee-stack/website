@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { simulateurSchema } from "@/lib/validations";
 import { z } from "zod";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { pushToCrm } from "@/lib/crm-webhook";
 
 const submitSchema = simulateurSchema.extend({
   fichesCibles: z.array(z.string()).optional(),
@@ -77,7 +78,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Webhook Monday.com
+    // Webhook Monday.com (direct API)
     if (process.env.MONDAY_API_KEY && process.env.MONDAY_BOARD_LEADS) {
       try {
         await createMondayLead(data);
@@ -85,6 +86,25 @@ export async function POST(req: NextRequest) {
         console.error("[Simulateur] Monday error (non-blocking):", mondayErr);
       }
     }
+
+    // Webhook Make.com → Monday CRM (non-blocking)
+    pushToCrm({
+      type: "SIMULATEUR",
+      data: {
+        nom: data.nom,
+        prenom: data.prenom,
+        email: data.email,
+        telephone: data.telephone ?? "",
+        societe: data.societe ?? "",
+        fonction: data.fonction ?? "",
+        secteur: data.secteur,
+        surface: data.surface ?? null,
+        zone: data.zone ?? "",
+        energie: data.energie ?? "",
+        fichesCibles: data.fichesCibles ?? [],
+        siteAdresse: data.siteAdresse ?? "",
+      },
+    });
 
     return NextResponse.json({ success: true, fichesCibles: data.fichesCibles ?? [] });
   } catch (err) {

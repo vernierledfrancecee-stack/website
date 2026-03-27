@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { contactSchema } from "@/lib/validations";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { pushToCrm } from "@/lib/crm-webhook";
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
@@ -79,6 +80,20 @@ export async function POST(req: NextRequest) {
         }),
       }).catch((e) => console.error("Email confirmation error:", e));
     }
+
+    // Webhook Make.com → Monday CRM (non-blocking)
+    pushToCrm({
+      type: "CONTACT",
+      data: {
+        nom: data.nom,
+        prenom: data.prenom,
+        email: data.email,
+        telephone: data.telephone ?? "",
+        societe: data.societe ?? "",
+        secteur: data.secteur ?? "",
+        message: data.message,
+      },
+    });
 
     return NextResponse.json({ success: true });
   } catch (err) {

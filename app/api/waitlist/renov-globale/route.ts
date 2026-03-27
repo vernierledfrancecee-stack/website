@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { pushToCrm } from "@/lib/crm-webhook";
 
 const waitlistSchema = z.object({
   nom: z.string().min(2).max(50).regex(/^[a-zA-ZÀ-ÿ\s\-']+$/),
@@ -148,6 +149,20 @@ export async function POST(req: NextRequest) {
         console.error("Monday error:", e);
       }
     }
+
+    // Webhook Make.com → Monday CRM (non-blocking)
+    pushToCrm({
+      type: "WAITLIST",
+      data: {
+        nom: data.nom,
+        email: data.email,
+        societe: data.societe ?? "",
+        telephone: data.telephone ?? "",
+        surface: data.surface ?? null,
+        source: data.source,
+        tag: "RENOV_GLOBALE_WAITLIST",
+      },
+    });
 
     return NextResponse.json({ success: true });
   } catch (err) {

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const timeline = [
-  { year: "2024–2025", label: "9 000+ chantiers luminaires réalisés", active: false },
+  { year: "2023–2025", label: "9 000+ chantiers luminaires réalisés", active: false },
   { year: "2025", label: "Fin du programme LED", active: false },
   { year: "2026", label: "Nouvelles fiches CEE disponibles", active: true },
 ];

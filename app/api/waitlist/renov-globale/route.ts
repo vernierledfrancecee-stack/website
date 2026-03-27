@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 const waitlistSchema = z.object({
   nom: z.string().min(2).max(50).regex(/^[a-zA-ZÀ-ÿ\s\-']+$/),
@@ -17,6 +18,18 @@ const waitlistSchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req);
+  const rl = rateLimit(`waitlist:${ip}`, 3, 60_000);
+  if (!rl.success) {
+    return NextResponse.json(
+      { message: "Trop de tentatives. Veuillez réessayer dans une minute." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(Math.ceil((rl.resetAt - Date.now()) / 1000)) },
+      }
+    );
+  }
+
   try {
     let body: unknown;
     try {

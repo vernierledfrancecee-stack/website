@@ -1,7 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { contactSchema } from "@/lib/validations";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req);
+  const rl = rateLimit(`contact:${ip}`, 5, 60_000);
+  if (!rl.success) {
+    return NextResponse.json(
+      { message: "Trop de tentatives. Veuillez réessayer dans une minute." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(Math.ceil((rl.resetAt - Date.now()) / 1000)) },
+      }
+    );
+  }
+
   try {
     let body: unknown;
     try {

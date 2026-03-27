@@ -1,14 +1,24 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function HeroSlider() {
   return (
     <section className="relative bg-[#0d1e3a] overflow-hidden sm:min-h-screen sm:flex sm:flex-col sm:justify-center">
+      {/* Photo de fond */}
+      <Image
+        src="https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1600&q=80"
+        alt=""
+        fill
+        className="object-cover opacity-20"
+        priority
+      />
+      {/* Overlay gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0d1e3a]/90 via-[#0d1e3a]/75 to-[#1a3460]/80" />
       {/* Fond décoratif */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-gradient-radial from-[#1a9e75]/15 to-transparent blur-3xl" />
-        <div className="absolute bottom-0 -left-20 w-80 h-80 rounded-full bg-[#1a3460]/60 blur-2xl" />
         <div
-          className="absolute inset-0 opacity-[0.025]"
+          className="absolute inset-0 opacity-[0.02]"
           style={{
             backgroundImage:
               "linear-gradient(#ffffff 1px,transparent 1px),linear-gradient(90deg,#ffffff 1px,transparent 1px)",

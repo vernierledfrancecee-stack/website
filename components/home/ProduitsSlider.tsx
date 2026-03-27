@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const slides = [
   {
@@ -33,6 +34,7 @@ const slides = [
     ],
     tags: ["🏢 Bureaux", "🏥 Santé", "🏨 Hôtels", "🏪 Commerces", "🏗️ Logistique", "🏠 Copropriétés"],
     tagLabel: "Profils éligibles",
+    photo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=75",
   },
   {
     id: "froid",
@@ -63,6 +65,7 @@ const slides = [
     ],
     tags: ["🏪 GMS", "🏭 Entrepôts frigo", "🥩 Agroalimentaire", "🏨 Hôtellerie", "🚛 Logistique"],
     tagLabel: "Secteurs concernés",
+    photo: "https://images.unsplash.com/photo-1565343417-31b2f3802d5b?auto=format&fit=crop&w=600&q=75",
   },
   {
     id: "agri",
@@ -93,6 +96,7 @@ const slides = [
     ],
     tags: ["🌿 Serres maraîchères", "🐄 Élevage", "🌾 Grandes cultures", "🏗️ Bâtiments agri"],
     tagLabel: "Exploitations éligibles",
+    photo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=75",
   },
 ];
 
@@ -178,26 +182,37 @@ export default function ProduitsSlider() {
 
           {/* Card — 40% */}
           <div className="lg:col-span-2">
-            <div className={`bg-gradient-to-br ${slide.cardBg} rounded-2xl p-6 sm:p-7`}>
-              <div className={`${slide.cardAccent} text-xs font-bold uppercase tracking-widest mb-4`}>
-                {slide.cardTitle}
-              </div>
-              <div className="space-y-3 mb-6">
-                {slide.stats.map((s) => (
-                  <div key={s.label} className="bg-white/6 border border-white/10 rounded-xl px-4 py-3">
-                    <div className="text-lg sm:text-xl font-bold text-white">{s.value}</div>
-                    <div className="text-white/45 text-xs mt-0.5">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-              <div className="border-t border-white/10 pt-4">
-                <div className="text-white/35 text-xs mb-2.5">{slide.tagLabel}</div>
-                <div className="flex flex-wrap gap-1.5">
-                  {slide.tags.map((t) => (
-                    <span key={t} className="text-xs text-white/55 bg-white/8 border border-white/10 rounded-full px-2.5 py-1">
-                      {t}
-                    </span>
+            <div className={`bg-gradient-to-br ${slide.cardBg} rounded-2xl p-6 sm:p-7 relative overflow-hidden`}>
+              {/* Background photo */}
+              {"photo" in slide && (
+                <Image
+                  src={(slide as { photo: string }).photo}
+                  alt=""
+                  fill
+                  className="object-cover opacity-15"
+                />
+              )}
+              <div className="relative z-10">
+                <div className={`${slide.cardAccent} text-xs font-bold uppercase tracking-widest mb-4`}>
+                  {slide.cardTitle}
+                </div>
+                <div className="space-y-3 mb-6">
+                  {slide.stats.map((s) => (
+                    <div key={s.label} className="bg-white/6 border border-white/10 rounded-xl px-4 py-3">
+                      <div className="text-lg sm:text-xl font-bold text-white">{s.value}</div>
+                      <div className="text-white/45 text-xs mt-0.5">{s.label}</div>
+                    </div>
                   ))}
+                </div>
+                <div className="border-t border-white/10 pt-4">
+                  <div className="text-white/35 text-xs mb-2.5">{slide.tagLabel}</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {slide.tags.map((t) => (
+                      <span key={t} className="text-xs text-white/55 bg-white/8 border border-white/10 rounded-full px-2.5 py-1">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

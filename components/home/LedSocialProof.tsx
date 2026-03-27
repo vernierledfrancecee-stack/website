@@ -1,10 +1,9 @@
 import Link from "next/link";
 
 const timeline = [
-  { year: "2020", label: "Lancement aides LED", active: false },
-  { year: "2021–2024", label: "9 000+ projets réalisés", active: false },
-  { year: "2025", label: "Fin du programme", active: false },
-  { year: "2026", label: "Nouvelles aides disponibles", active: true },
+  { year: "2024–2025", label: "9 000+ chantiers luminaires réalisés", active: false },
+  { year: "2025", label: "Fin du programme LED", active: false },
+  { year: "2026", label: "Nouvelles fiches CEE disponibles", active: true },
 ];
 
 export default function LedSocialProof() {
@@ -41,7 +40,7 @@ export default function LedSocialProof() {
         {/* Timeline */}
         <div className="relative mb-10 sm:mb-14">
           {/* Ligne de connexion desktop */}
-          <div className="hidden sm:block absolute top-4 left-[12.5%] right-[12.5%] h-0.5 bg-white/10" />
+          <div className="hidden sm:block absolute top-4 left-[16.7%] right-[16.7%] h-0.5 bg-white/10" />
 
           {/* Mobile : liste verticale */}
           <div className="sm:hidden flex flex-col gap-0 max-w-xs mx-auto">
@@ -68,7 +67,7 @@ export default function LedSocialProof() {
           </div>
 
           {/* Desktop : grille horizontale */}
-          <div className="hidden sm:grid grid-cols-4 gap-0">
+          <div className="hidden sm:grid grid-cols-3 gap-0">
             {timeline.map((t, idx) => (
               <div key={t.year} className="relative flex flex-col items-center">
                 {idx < timeline.length - 1 && (

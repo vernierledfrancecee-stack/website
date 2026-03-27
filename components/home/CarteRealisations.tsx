@@ -43,28 +43,30 @@ const sectors = [
   },
 ];
 
-// Approximate dot positions (% from left, % from top) within a France SVG viewBox
+// Dots recalculés depuis les vraies coordonnées GPS
+// France métropolitaine : lat 42.3°N–51.1°N, lon -4.8°E–8.2°E
+// SVG viewBox 0-100 : x = 16 + (lon+4.8)/13*64 ; y = 3 + (51.1-lat)/8.8*81
 const dots = [
-  { x: 48, y: 18 }, // Lille
-  { x: 72, y: 25 }, // Strasbourg
-  { x: 38, y: 30 }, // Paris
-  { x: 55, y: 30 }, // Reims
-  { x: 28, y: 42 }, // Rennes
-  { x: 42, y: 40 }, // Le Mans
-  { x: 58, y: 38 }, // Dijon
-  { x: 72, y: 42 }, // Lyon area
-  { x: 30, y: 54 }, // Nantes
-  { x: 45, y: 52 }, // Clermont
-  { x: 60, y: 50 }, // Grenoble
-  { x: 22, y: 62 }, // Bordeaux
-  { x: 40, y: 62 }, // Toulouse
-  { x: 55, y: 64 }, // Montpellier
-  { x: 68, y: 62 }, // Nice
-  { x: 32, y: 72 }, // Bayonne
-  { x: 48, y: 74 }, // Perpignan
-  { x: 62, y: 75 }, // Marseille area
-  { x: 44, y: 46 }, // Limoges
-  { x: 52, y: 44 }, // Aurillac
+  { x: 55, y: 8  }, // Lille        50.6°N  3.1°E
+  { x: 76, y: 24 }, // Strasbourg   48.6°N  7.75°E
+  { x: 51, y: 22 }, // Paris        48.9°N  2.35°E
+  { x: 60, y: 18 }, // Reims        49.3°N  4.03°E
+  { x: 38, y: 19 }, // Caen         49.2°N -0.37°E
+  { x: 31, y: 28 }, // Rennes       48.1°N -1.68°E
+  { x: 41, y: 29 }, // Le Mans      48.0°N  0.20°E
+  { x: 65, y: 35 }, // Dijon        47.3°N  5.04°E
+  { x: 32, y: 37 }, // Nantes       47.2°N -1.55°E
+  { x: 46, y: 49 }, // Limoges      45.8°N  1.26°E
+  { x: 55, y: 49 }, // Clermont-Fd  45.8°N  3.08°E
+  { x: 64, y: 49 }, // Lyon         45.75°N 4.85°E
+  { x: 68, y: 54 }, // Grenoble     45.2°N  5.72°E
+  { x: 37, y: 57 }, // Bordeaux     44.8°N -0.58°E
+  { x: 47, y: 69 }, // Toulouse     43.6°N  1.44°E
+  { x: 59, y: 69 }, // Montpellier  43.6°N  3.88°E
+  { x: 66, y: 67 }, // Marseille    43.3°N  5.4°E
+  { x: 72, y: 65 }, // Nice         43.7°N  7.27°E
+  { x: 32, y: 70 }, // Bayonne      43.5°N -1.47°E
+  { x: 54, y: 77 }, // Perpignan    42.7°N  2.9°E
 ];
 
 export default function CarteRealisations() {

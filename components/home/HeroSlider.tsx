@@ -64,20 +64,19 @@ export default function HeroSlider() {
         </div>
 
         {/* Badge confiance */}
-        <div className="inline-flex flex-wrap items-center gap-2 sm:gap-0 bg-white/6 border border-white/10 rounded-2xl px-5 py-3.5">
-          {[
-            "✓ 9 000+ projets réalisés",
-            "✓ 0 € d'avance",
-            "✓ Dossier 100% géré par LEDX",
-          ].map((item, idx) => (
-            <span key={item} className="flex items-center gap-0">
-              <span className="text-white/70 text-xs sm:text-sm font-medium">{item}</span>
-              {idx < 2 && (
-                <span className="hidden sm:inline mx-4 text-white/20">·</span>
-              )}
-              {idx < 2 && <span className="sm:hidden w-full h-0" />}
-            </span>
-          ))}
+        <div className="bg-white/6 border border-white/10 rounded-2xl px-5 py-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-0 gap-2">
+            {[
+              "✓ 9 000+ projets réalisés",
+              "✓ 0 € d'avance",
+              "✓ Dossier 100% géré par LEDX",
+            ].map((item, idx) => (
+              <span key={item} className="flex items-center">
+                <span className="text-white/70 text-xs font-medium">{item}</span>
+                {idx < 2 && <span className="hidden sm:inline mx-4 text-white/20">·</span>}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 

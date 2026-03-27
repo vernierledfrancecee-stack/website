@@ -21,7 +21,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#0d1e3a] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           {/* Colonne 1 — Identité */}
           <div className="lg:col-span-1">
             <LedxLogo variant="light" className="text-sm mb-4" />

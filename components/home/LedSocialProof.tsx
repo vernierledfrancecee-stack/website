@@ -43,12 +43,36 @@ export default function LedSocialProof() {
           {/* Ligne de connexion desktop */}
           <div className="hidden sm:block absolute top-4 left-[12.5%] right-[12.5%] h-0.5 bg-white/10" />
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-0">
+          {/* Mobile : liste verticale */}
+          <div className="sm:hidden flex flex-col gap-0 max-w-xs mx-auto">
+            {timeline.map((t, idx) => (
+              <div key={t.year} className="flex items-start gap-4">
+                <div className="flex flex-col items-center">
+                  <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                    t.active ? "bg-[#1a9e75] border-[#1a9e75]" : "bg-[#0d1e3a] border-white/20"
+                  }`}>
+                    {t.active
+                      ? <div className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />
+                      : <div className="w-2 h-2 rounded-full bg-white/25" />}
+                  </div>
+                  {idx < timeline.length - 1 && (
+                    <div className="w-0.5 h-8 bg-white/10 my-1" />
+                  )}
+                </div>
+                <div className="pt-1 pb-4">
+                  <div className={`text-sm font-bold ${t.active ? "text-[#1a9e75]" : "text-white/50"}`}>{t.year}</div>
+                  <div className={`text-xs leading-snug ${t.active ? "text-white font-medium" : "text-white/35"}`}>{t.label}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop : grille horizontale */}
+          <div className="hidden sm:grid grid-cols-4 gap-0">
             {timeline.map((t, idx) => (
               <div key={t.year} className="relative flex flex-col items-center">
-                {/* Ligne mobile entre items */}
                 {idx < timeline.length - 1 && (
-                  <div className="sm:hidden absolute top-4 left-1/2 w-full h-0.5 bg-white/10" />
+                  <div className="absolute top-4 left-1/2 w-full h-0.5 bg-white/10" />
                 )}
                 {/* Dot */}
                 <div
@@ -81,7 +105,7 @@ export default function LedSocialProof() {
               </div>
             ))}
           </div>
-        </div>
+          </div>
 
         {/* Punchline */}
         <div className="bg-white/5 border border-white/10 rounded-2xl px-6 sm:px-8 py-5 sm:py-6 mb-8 sm:mb-10 max-w-2xl mx-auto">

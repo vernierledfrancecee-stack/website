@@ -43,15 +43,15 @@ export default function AgriSection() {
                 le terrain.
               </p>
             </div>
-            <div className="flex flex-wrap gap-3 lg:justify-end">
+            <div className="grid grid-cols-3 gap-3">
               {[
-                { value: "3", label: "fiches agricoles maîtrisées" },
-                { value: "-35%", label: "économies énergie en serre" },
+                { value: "3", label: "fiches agricoles" },
+                { value: "-35%", label: "économies en serre" },
                 { value: "0€", label: "reste à charge" },
               ].map((s) => (
-                <div key={s.label} className="bg-[#f8f9fa] border border-gray-100 rounded-xl px-5 py-4 text-center">
-                  <div className="text-2xl font-bold text-[#1a9e75]">{s.value}</div>
-                  <div className="text-[#2c2c2a]/50 text-xs mt-0.5">{s.label}</div>
+                <div key={s.label} className="bg-[#f8f9fa] border border-gray-100 rounded-xl px-3 py-4 text-center">
+                  <div className="text-xl sm:text-2xl font-bold text-[#1a9e75]">{s.value}</div>
+                  <div className="text-[#2c2c2a]/50 text-xs mt-0.5 leading-tight">{s.label}</div>
                 </div>
               ))}
             </div>

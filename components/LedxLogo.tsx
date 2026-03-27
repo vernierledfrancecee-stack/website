@@ -27,7 +27,7 @@ export default function LedxLogo({ variant = "light", size = "md", className = "
   };
 
   return (
-    <span style={style} className={className} aria-label="LEDX 1E Énergie">
+    <span style={style} className={className} aria-label="LEDX E Énergie">
       {/* LED */}
       <span>LED</span>
 

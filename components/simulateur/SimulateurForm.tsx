@@ -25,8 +25,14 @@ export default function SimulateurForm() {
     setFormData((prev) => ({ ...prev, ...data }));
   };
 
-  const nextStep = () => setStep((s) => Math.min(s + 1, TOTAL_STEPS));
-  const prevStep = () => setStep((s) => Math.max(s - 1, 1));
+  const nextStep = () => {
+    setStep((s) => Math.min(s + 1, TOTAL_STEPS));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const prevStep = () => {
+    setStep((s) => Math.max(s - 1, 1));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const fiches = calculerEligibilite(formData);
 
@@ -34,10 +40,15 @@ export default function SimulateurForm() {
     setSubmitting(true);
     setSubmitError("");
     try {
+      const normalizedData = {
+        ...formData,
+        telephone: formData.telephone?.replace(/[\s.\-()]/g, "") || undefined,
+        fichesCibles: fiches.map((f) => f.code),
+      };
       const res = await fetch("/api/simulateur/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, fichesCibles: fiches.map((f) => f.code) }),
+        body: JSON.stringify(normalizedData),
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));

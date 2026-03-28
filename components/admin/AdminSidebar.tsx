@@ -20,6 +20,15 @@ const navItems: NavItem[] = [
     ),
   },
   {
+    label: "Toutes les soumissions",
+    href: "/admin/soumissions",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+      </svg>
+    ),
+  },
+  {
     label: "Leads simulateur",
     href: "/admin/leads",
     icon: (
@@ -65,7 +74,6 @@ export default function AdminSidebar() {
 
   return (
     <aside className="w-64 min-h-screen bg-[#0d1e3a] border-r border-gray-800 flex flex-col">
-      {/* Logo */}
       <div className="px-6 py-6 border-b border-gray-800">
         <div className="flex items-center gap-3">
           <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-[#1a3a6b] flex items-center justify-center">
@@ -80,7 +88,6 @@ export default function AdminSidebar() {
         </div>
       </div>
 
-      {/* Navigation */}
       <nav className="flex-1 px-3 py-4 space-y-1">
         {navItems.map((item) => {
           const active = isActive(item.href);
@@ -106,7 +113,6 @@ export default function AdminSidebar() {
         })}
       </nav>
 
-      {/* User / Sign Out */}
       <div className="px-3 py-4 border-t border-gray-800 space-y-2">
         <button
           onClick={handleLogout}

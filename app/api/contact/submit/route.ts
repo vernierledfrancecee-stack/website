@@ -34,6 +34,24 @@ export async function POST(req: NextRequest) {
 
     const data = parsed.data;
 
+    // Sauvegarde en BDD
+    try {
+      const { prisma } = await import("@/lib/prisma");
+      await prisma.contactMessage.create({
+        data: {
+          nom: data.nom,
+          prenom: data.prenom,
+          email: data.email.toLowerCase(),
+          telephone: data.telephone || null,
+          societe: data.societe || null,
+          secteur: data.secteur || null,
+          message: data.message,
+        },
+      });
+    } catch (dbErr) {
+      console.error("[Contact] DB error (non-blocking):", dbErr);
+    }
+
     if (process.env.BREVO_API_KEY) {
       const apiKey = process.env.BREVO_API_KEY;
       const fromEmail = process.env.BREVO_FROM_EMAIL ?? "contact@ledxenergie.com";

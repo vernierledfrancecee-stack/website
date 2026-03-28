@@ -52,7 +52,12 @@ export default function SimulateurForm() {
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.message ?? "Erreur lors de l'envoi");
+        const fieldErrors = err.errors?.fieldErrors
+          ? Object.entries(err.errors.fieldErrors as Record<string, string[]>)
+              .map(([k, v]) => `${k}: ${v.join(", ")}`)
+              .join(" | ")
+          : "";
+        throw new Error(fieldErrors ? `${err.message ?? "Erreur"} — ${fieldErrors}` : (err.message ?? "Erreur lors de l'envoi"));
       }
       setSubmitted(true);
     } catch (err) {

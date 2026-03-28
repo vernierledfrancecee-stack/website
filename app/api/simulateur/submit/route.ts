@@ -30,8 +30,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "Corps de requête invalide" }, { status: 400 });
     }
 
+    // Prétraitement : convertir les chaînes vides en undefined (compatibilité Zod v4)
+    const processedBody = typeof body === "object" && body !== null
+      ? Object.fromEntries(
+          Object.entries(body as Record<string, unknown>).map(([k, v]) => [k, v === "" ? undefined : v])
+        )
+      : body;
+
     // Validation Zod
-    const parsed = submitSchema.safeParse(body);
+    const parsed = submitSchema.safeParse(processedBody);
     if (!parsed.success) {
       return NextResponse.json(
         { message: "Données invalides", errors: parsed.error.flatten() },

@@ -11,7 +11,7 @@ interface Realisation {
   description: string;
   localisation?: string;
   details?: string[];
-  photo?: string; // chemin vers /public/realisations/
+  photo?: string;
 }
 
 const realisations: Realisation[] = [
@@ -22,7 +22,7 @@ const realisations: Realisation[] = [
     fiche: "BAT-TH-163",
     categorie: "pac-tertiaire",
     description:
-      "Remplacement d'une chaufferie gaz par cascade de 4 PAC Air/Eau de 30 kW. 2 réseaux aérothermes indépendants. Surface couverte : 4 200 m².",
+      "Remplacement d'une chaufferie gaz par cascade de 4 PAC Air/Eau de 30 kW. 2 réseaux aérothermes indépendants. Surface couverte : 4 200 m².",
     localisation: "Île-de-France",
     details: ["4 × PAC 30 kW en cascade", "2 réseaux aérothermes", "4 200 m² couverts", "Zone H2"],
   },
@@ -114,6 +114,54 @@ const realisations: Realisation[] = [
     localisation: "Rhône-Alpes",
     details: ["420 luminaires LED", "12 000 m²", "-68% consommation", "Haute baie"],
   },
+  {
+    id: "10",
+    titre: "PAC Air/Eau — Résidence collective",
+    secteur: "Résidentiel collectif",
+    fiche: "BAR-TH-179",
+    categorie: "pac-residentiel",
+    description:
+      "Installation de 3 unités PAC Air/Eau en remplacement d'une chaufferie collective gaz. Résidence en cours de livraison, chauffage et eau chaude sanitaire couverts.",
+    localisation: "Île-de-France",
+    details: ["3 unités PAC extérieures", "Chauffage + ECS", "Remplacement gaz collectif", "Livraison neuf"],
+    photo: "/realisations/pac/pac-residentiel-collective.jpg",
+  },
+  {
+    id: "11",
+    titre: "Entrepôt frigorifique alimentaire",
+    secteur: "Agroalimentaire",
+    fiche: "BAT-TH-134",
+    categorie: "froid",
+    description:
+      "Optimisation du système de froid positif dans un entrepôt agroalimentaire à Mouriès. Éclairage LED intégré et régulation HP/BP flottante.",
+    localisation: "Provence-Alpes-Côte d'Azur",
+    details: ["Froid positif", "Régulation HP/BP", "LED haute baie", "Agroalimentaire"],
+    photo: "/realisations/froid/entrepot-frigorifique-mouries.jpg",
+  },
+  {
+    id: "12",
+    titre: "Entrepôt industriel — LED haute baie",
+    secteur: "Industrie",
+    fiche: "BAT-EQ-127",
+    categorie: "led",
+    description:
+      "Remplacement de l'éclairage d'un entrepôt industriel de stockage acier par des luminaires LED haute baie. Économies d'énergie de 65%. Pont roulant 12,5 t.",
+    localisation: "Normandie",
+    details: ["LED haute baie", "Pont roulant 12,5 t", "-65% consommation", "Stockage acier"],
+    photo: "/realisations/led/entrepot-led-industriel-1.jpg",
+  },
+  {
+    id: "13",
+    titre: "Atelier de production — LED",
+    secteur: "Industrie",
+    fiche: "BAT-EQ-127",
+    categorie: "led",
+    description:
+      "Rénovation complète de l'éclairage d'un atelier industriel. LED haute baie sur l'ensemble des nefs. Uniformité d'éclairement optimisée pour la sécurité opérateurs.",
+    localisation: "Normandie",
+    details: ["LED haute baie", "Atelier production", "Uniformité éclairement", "Sécurité opérateurs"],
+    photo: "/realisations/led/entrepot-led-industriel-2.jpg",
+  },
 ];
 
 const filtres = [
@@ -199,17 +247,13 @@ export default function RealisationsGallery() {
                   ? "bg-gradient-to-br from-cyan-950 to-cyan-900"
                   : "bg-gradient-to-br from-[#0d2e20] to-[#0d1e3a]"
               }`}>
-                {/* Subtle grid */}
                 <div className="absolute inset-0 opacity-10"
                   style={{backgroundImage:"linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px)",backgroundSize:"24px 24px"}}
                 />
-                {/* Big icon */}
                 <span className="text-7xl relative z-10 drop-shadow-2xl opacity-80" role="img" aria-label={r.secteur}>
                   {categorieIcons[r.categorie]}
                 </span>
-                {/* Glow */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                {/* Localisation overlay */}
                 {r.localisation && (
                   <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-black/40 backdrop-blur-sm rounded-full px-3 py-1">
                     <svg className="w-3 h-3 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">

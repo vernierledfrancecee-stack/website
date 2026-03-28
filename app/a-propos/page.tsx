@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "À Propos — LEDX Énergie, développeur d'opérations CEE",
   description:
-    "Fondée en 2018, LEDX Énergie est un développeur d'opérations CEE présent partout en France. 9 000+ réalisations. 25 rue de Ponthieu, Paris 8e.",
+    "LEDX Énergie est un développeur d'opérations CEE présent partout en France. 9 000+ réalisations. 25 rue de Ponthieu, Paris 8e.",
 };
 
 const processSteps = [
@@ -26,7 +26,7 @@ export default function AProposPage() {
       <div className="bg-[#0d1e3a] py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-block bg-[#1a9e75]/20 border border-[#1a9e75]/30 text-[#1a9e75] text-sm font-semibold px-4 py-1.5 rounded-full mb-6">
-            Depuis 2018
+            Opérateur CEE agréé
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">À Propos de LEDX Énergie</h1>
           <p className="text-white/70 max-w-2xl mx-auto">
@@ -43,7 +43,7 @@ export default function AProposPage() {
           <div className="prose prose-slate max-w-none text-[#2c2c2a]/70">
             <p className="text-lg leading-relaxed mb-4">
               LEDX Énergie est un <strong className="text-[#0d1e3a]">développeur d&apos;opérations CEE</strong> (Certificats
-              d&apos;Économies d&apos;Énergie) B2B. Fondée en 2018 et présente partout en France,
+              d&apos;Économies d&apos;Énergie) B2B. Présente partout en France,
               notre société intervient auprès des entreprises, collectivités, bailleurs et exploitants
               agricoles pour leur permettre de financer leurs projets d&apos;efficacité énergétique
               sans avance de fonds.
@@ -55,7 +55,7 @@ export default function AProposPage() {
               en passant par la constitution du dossier réglementaire et la coordination des partenaires certifiés RGE.
             </p>
             <p className="leading-relaxed">
-              Avec <strong className="text-[#0d1e3a]">9 000+ réalisations depuis 2023</strong>, LEDX Énergie est
+              Avec <strong className="text-[#0d1e3a]">9 000+ réalisations</strong>, LEDX Énergie est
               l&apos;un des leaders français du marché CEE en milieu tertiaire, industriel et agricole.
             </p>
           </div>
@@ -65,8 +65,7 @@ export default function AProposPage() {
         <section className="mb-16">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { value: "2018", label: "Année de création" },
-              { value: "9 000+", label: "Réalisations depuis 2023" },
+              { value: "9 000+", label: "Réalisations" },
               { value: "6", label: "Fiches CEE maîtrisées" },
               { value: "0 €", label: "Avance de fonds demandée" },
             ].map((stat) => (

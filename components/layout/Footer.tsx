@@ -27,7 +27,7 @@ export default function Footer() {
             <LedxLogo variant="light" className="text-sm mb-4" />
             <p className="text-white/60 text-sm leading-relaxed">
               Développeur d&apos;opérations CEE — nous montons vos dossiers de A à Z.
-              9 000+ projets réalisés partout en France depuis 2023.
+              9 000+ projets réalisés partout en France.
             </p>
           </div>
 

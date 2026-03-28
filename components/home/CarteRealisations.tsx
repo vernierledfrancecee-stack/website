@@ -83,7 +83,7 @@ export default function CarteRealisations() {
             Nos réalisations en France
           </h2>
           <p className="text-[#2c2c2a]/60 text-base sm:text-lg max-w-xl mx-auto">
-            Présents dans toute la France depuis 2020
+            Présents dans toute la France
           </p>
         </div>
 
@@ -194,7 +194,7 @@ export default function CarteRealisations() {
             { value: "9 000+", label: "projets réalisés" },
             { value: "80+", label: "départements couverts" },
             { value: "0 €", label: "d'avance demandée" },
-            { value: "depuis 2020", label: "en activité" },
+            { value: "100%", label: "dossiers pris en charge" },
           ].map((s) => (
             <div key={s.label} className="bg-white border border-gray-100 rounded-xl px-4 py-4 text-center shadow-sm">
               <div className="text-xl sm:text-2xl font-bold text-[#0d1e3a]">{s.value}</div>

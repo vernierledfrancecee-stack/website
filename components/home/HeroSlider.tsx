@@ -59,7 +59,7 @@ export default function HeroSlider() {
           {[
             { value: "9 000+", label: "projets réalisés" },
             { value: "80+", label: "départements" },
-            { value: "2020", label: "fondé en" },
+            { value: "100%", label: "dossiers pris en charge" },
           ].map((s) => (
             <div key={s.label}>
               <div className="text-xl sm:text-2xl font-bold text-white">{s.value}</div>

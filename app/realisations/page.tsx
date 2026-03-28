@@ -18,7 +18,7 @@ export default function RealisationsPage() {
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Nos Réalisations</h1>
           <p className="text-white/70 max-w-2xl mx-auto">
             Quelques exemples parmi les milliers de projets CEE coordonnés par LEDX Énergie
-            depuis 2023 partout en France.
+            partout en France.
           </p>
         </div>
       </div>

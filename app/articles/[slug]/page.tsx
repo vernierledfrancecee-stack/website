@@ -62,18 +62,18 @@ export default async function ArticlePage({ params }: Props) {
 
       {/* Contenu */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="prose prose-invert prose-lg max-w-none">
+        <div className="prose prose-lg max-w-none">
           {paragraphs.map((block, i) => {
             if (block.startsWith("## ")) {
               return (
-                <h2 key={i} className="text-xl sm:text-2xl font-bold text-white mt-10 mb-4">
+                <h2 key={i} className="text-xl sm:text-2xl font-bold text-[#0d1e3a] mt-10 mb-4">
                   {block.replace("## ", "")}
                 </h2>
               );
             }
             if (block.startsWith("### ")) {
               return (
-                <h3 key={i} className="text-lg font-bold text-white mt-8 mb-3">
+                <h3 key={i} className="text-lg font-bold text-[#0d1e3a] mt-8 mb-3">
                   {block.replace("### ", "")}
                 </h3>
               );
@@ -81,16 +81,16 @@ export default async function ArticlePage({ params }: Props) {
             if (block.startsWith("- ")) {
               const items = block.split("\n").filter((l) => l.startsWith("- "));
               return (
-                <ul key={i} className="list-disc list-inside space-y-2 text-white/70 my-4">
+                <ul key={i} className="list-disc list-inside space-y-2 text-[#2c2c2a]/70 my-4">
                   {items.map((item, j) => (
-                    <li key={j} dangerouslySetInnerHTML={{ __html: item.replace("- ", "").replace(/\*\*(.*?)\*\*/g, "<strong class='text-white'>$1</strong>") }} />
+                    <li key={j} dangerouslySetInnerHTML={{ __html: item.replace("- ", "").replace(/\*\*(.*?)\*\*/g, "<strong class='text-[#0d1e3a]'>$1</strong>") }} />
                   ))}
                 </ul>
               );
             }
             return (
-              <p key={i} className="text-white/70 leading-relaxed my-4"
-                dangerouslySetInnerHTML={{ __html: block.replace(/\*\*(.*?)\*\*/g, "<strong class='text-white'>$1</strong>") }}
+              <p key={i} className="text-[#2c2c2a]/70 leading-relaxed my-4"
+                dangerouslySetInnerHTML={{ __html: block.replace(/\*\*(.*?)\*\*/g, "<strong class='text-[#0d1e3a]'>$1</strong>") }}
               />
             );
           })}

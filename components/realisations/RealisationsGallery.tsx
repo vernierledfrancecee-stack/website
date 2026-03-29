@@ -124,7 +124,6 @@ const realisations: Realisation[] = [
       "Installation de 3 unités PAC Air/Eau en remplacement d'une chaufferie collective gaz. Résidence en cours de livraison, chauffage et eau chaude sanitaire couverts.",
     localisation: "Île-de-France",
     details: ["3 unités PAC extérieures", "Chauffage + ECS", "Remplacement gaz collectif", "Livraison neuf"],
-    photo: "/realisations/pac/pac-residentiel-collective.jpg",
   },
   {
     id: "11",
@@ -136,7 +135,6 @@ const realisations: Realisation[] = [
       "Optimisation du système de froid positif dans un entrepôt agroalimentaire à Mouriès. Éclairage LED intégré et régulation HP/BP flottante.",
     localisation: "Provence-Alpes-Côte d'Azur",
     details: ["Froid positif", "Régulation HP/BP", "LED haute baie", "Agroalimentaire"],
-    photo: "/realisations/froid/entrepot-frigorifique-mouries.jpg",
   },
   {
     id: "12",
@@ -148,7 +146,6 @@ const realisations: Realisation[] = [
       "Remplacement de l'éclairage d'un entrepôt industriel de stockage acier par des luminaires LED haute baie. Économies d'énergie de 65%. Pont roulant 12,5 t.",
     localisation: "Normandie",
     details: ["LED haute baie", "Pont roulant 12,5 t", "-65% consommation", "Stockage acier"],
-    photo: "/realisations/led/entrepot-led-industriel-1.jpg",
   },
   {
     id: "13",
@@ -160,7 +157,6 @@ const realisations: Realisation[] = [
       "Rénovation complète de l'éclairage d'un atelier industriel. LED haute baie sur l'ensemble des nefs. Uniformité d'éclairement optimisée pour la sécurité opérateurs.",
     localisation: "Normandie",
     details: ["LED haute baie", "Atelier production", "Uniformité éclairement", "Sécurité opérateurs"],
-    photo: "/realisations/led/entrepot-led-industriel-2.jpg",
   },
 ];
 

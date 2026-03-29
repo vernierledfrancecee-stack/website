@@ -13,36 +13,51 @@ const typesClient = [
 
 export default function MiniLeadForm() {
   const router = useRouter();
-  const [form, setForm] = useState({ type: "", telephone: "", surface: "" });
+  const [form, setForm] = useState({ nom: "", prenom: "", email: "", type: "", telephone: "", surface: "" });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Redirect direct si formulaire vide
-    if (!form.type && !form.telephone) {
+    if (!form.nom && !form.prenom && !form.email && !form.telephone) {
       router.push("/simulateur");
       return;
     }
 
+    if (!form.nom.trim() || !form.prenom.trim() || !form.email.trim()) {
+      setError("Nom, prénom et email sont requis.");
+      return;
+    }
+
     setLoading(true);
+    setError("");
     try {
-      await fetch("/api/contact/submit", {
+      const res = await fetch("/api/contact/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          nom: form.type,
-          telephone: form.telephone,
-          surface: form.surface,
-          source: "mini-lead-form-cee",
-          secteur: form.type,
+          nom: form.nom,
+          prenom: form.prenom,
+          email: form.email,
+          telephone: form.telephone || undefined,
+          societe: form.type || undefined,
+          secteur: form.type || undefined,
+          message: `Demande d'analyse de parc — ${form.surface ? form.surface + " sites" : "via formulaire rapide"}`,
         }),
       });
+      if (!res.ok) {
+        setError("Une erreur est survenue. Veuillez réessayer.");
+        setLoading(false);
+        return;
+      }
       setSent(true);
       // Redirect après 1.5s
       setTimeout(() => router.push("/simulateur"), 1500);
     } catch {
+      setError("Une erreur est survenue. Veuillez réessayer.");
       setLoading(false);
     }
   };
@@ -75,6 +90,33 @@ export default function MiniLeadForm() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-3">
+            {/* Nom + Prénom */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input
+                type="text"
+                placeholder="Prénom *"
+                value={form.prenom}
+                onChange={(e) => setForm({ ...form, prenom: e.target.value })}
+                className="w-full bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-4 text-sm focus:outline-none focus:border-[#1a9e75] transition-colors"
+              />
+              <input
+                type="text"
+                placeholder="Nom *"
+                value={form.nom}
+                onChange={(e) => setForm({ ...form, nom: e.target.value })}
+                className="w-full bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-4 text-sm focus:outline-none focus:border-[#1a9e75] transition-colors"
+              />
+            </div>
+
+            {/* Email */}
+            <input
+              type="email"
+              placeholder="Email professionnel *"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              className="w-full bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-4 text-sm focus:outline-none focus:border-[#1a9e75] transition-colors"
+            />
+
             {/* Type de client */}
             <select
               value={form.type}
@@ -107,6 +149,8 @@ export default function MiniLeadForm() {
                 className="w-full bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-4 text-sm focus:outline-none focus:border-[#1a9e75] transition-colors"
               />
             </div>
+
+            {error && <p className="text-red-400 text-xs">{error}</p>}
 
             <button
               type="submit"

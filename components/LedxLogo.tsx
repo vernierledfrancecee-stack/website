@@ -55,7 +55,7 @@ export default function LedxLogo({ variant = "light", size = "md", className = "
       </span>
 
       {/* Espace + ÉNERGIE */}
-      <span style={{ fontWeight: 700, marginLeft: "0.35em" }}>ÉNERGIE</span>
+      <span style={{ marginLeft: "0.35em" }}>ÉNERGIE</span>
     </span>
   );
 }

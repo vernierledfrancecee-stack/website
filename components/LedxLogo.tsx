@@ -27,7 +27,7 @@ export default function LedxLogo({ variant = "light", size = "md", className = "
   };
 
   return (
-    <span style={style} className={className} aria-label="LEDX E \u00c9NERGIE">
+    <span style={style} className={className} aria-label="LEDX ÉNERGIE">
       {/* LED */}
       <span style={{ fontSize: fontSize, fontWeight: 900 }}>LED</span>
 
@@ -47,15 +47,15 @@ export default function LedxLogo({ variant = "light", size = "md", className = "
             pointerEvents: "none",
           }}
         >
-          {/* Losange sup\u00e9rieur */}
+          {/* Losange supérieur */}
           <polygon points="6.5,0 13,9 6.5,9 0,9" fill="#2dc48d" />
-          {/* Losange inf\u00e9rieur */}
+          {/* Losange inférieur */}
           <polygon points="6.5,9 13,9 6.5,18 0,9" fill="#1a9e75" />
         </svg>
       </span>
 
-      {/* Espace + \u00c9NERGIE */}
-      <span style={{ marginLeft: "0.35em", fontSize: fontSize, fontWeight: 900 }}>\u00c9NERGIE</span>
+      {/* Espace + ÉNERGIE */}
+      <span style={{ marginLeft: "0.35em", fontSize: fontSize, fontWeight: 900 }}>ÉNERGIE</span>
     </span>
   );
 }

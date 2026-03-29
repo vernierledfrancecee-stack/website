@@ -27,12 +27,12 @@ export default function LedxLogo({ variant = "light", size = "md", className = "
   };
 
   return (
-    <span style={style} className={className} aria-label="LEDX E ÉNERGIE">
+    <span style={style} className={className} aria-label="LEDX E \u00c9NERGIE">
       {/* LED */}
-      <span>LED</span>
+      <span style={{ fontSize: fontSize, fontWeight: 900 }}>LED</span>
 
       {/* X avec losanges verts au centre */}
-      <span style={{ position: "relative", display: "inline-block" }}>
+      <span style={{ position: "relative", display: "inline-block", fontSize: fontSize, fontWeight: 900 }}>
         X
         <svg
           width={diamondW}
@@ -47,15 +47,15 @@ export default function LedxLogo({ variant = "light", size = "md", className = "
             pointerEvents: "none",
           }}
         >
-          {/* Losange supérieur */}
+          {/* Losange sup\u00e9rieur */}
           <polygon points="6.5,0 13,9 6.5,9 0,9" fill="#2dc48d" />
-          {/* Losange inférieur */}
+          {/* Losange inf\u00e9rieur */}
           <polygon points="6.5,9 13,9 6.5,18 0,9" fill="#1a9e75" />
         </svg>
       </span>
 
-      {/* Espace + ÉNERGIE */}
-      <span style={{ marginLeft: "0.35em" }}>ÉNERGIE</span>
+      {/* Espace + \u00c9NERGIE */}
+      <span style={{ marginLeft: "0.35em", fontSize: fontSize, fontWeight: 900 }}>\u00c9NERGIE</span>
     </span>
   );
 }

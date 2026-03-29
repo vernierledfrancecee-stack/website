@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { articles } from "@/lib/articles";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ledxenergie.com";
+  const baseUrl = "https://www.ledxenergie.com";
 
   const solutionSlugs = ["pac-tertiaire", "pac-residentiel", "froid-commercial", "agriculture", "renov-globale"];
 

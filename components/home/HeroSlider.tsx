@@ -27,9 +27,9 @@ export default function HeroSlider() {
 
         {/* Headline */}
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.05] tracking-tight mb-7 sm:mb-8 max-w-3xl">
-          Vos travaux énergétiques.
+          Vos travaux
           <br />
-          <span className="text-[#1a9e75]">Financés à 0 €.</span>
+          <span className="text-[#1a9e75]">pris en charge par les CEE.</span>
         </h1>
 
         {/* Sous-titre — une ligne, sobre */}
@@ -44,7 +44,7 @@ export default function HeroSlider() {
             href="/simulateur"
             className="inline-flex items-center gap-3 bg-[#1a9e75] hover:bg-[#147a5b] active:scale-95 text-white font-semibold px-7 py-4 rounded-xl text-base transition-all duration-200"
           >
-            Demander une analyse gratuite
+            Demander votre étude d&apos;éligibilité
             <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>

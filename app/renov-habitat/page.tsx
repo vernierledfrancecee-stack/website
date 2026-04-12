@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import RenovHabitatLogo from "@/components/RenovHabitatLogo";
+import EligibiliteForm from "@/components/renov-habitat/EligibiliteForm";
 
 export const metadata: Metadata = {
   title: "LEDX Rénov'Habitat — Rénovation énergétique d'ampleur financée par les CEE",
@@ -173,15 +174,15 @@ export default function RenovHabitatPage() {
 
           {/* CTAs — stacked on mobile, inline on sm+ */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-            <Link
-              href="/contact"
+            <a
+              href="#eligibilite"
               className="inline-flex items-center justify-center gap-2.5 bg-[#1a9e75] hover:bg-[#147a5b] text-white font-semibold px-7 py-3.5 sm:py-4 rounded-xl transition-all duration-200 shadow-sm hover:shadow-lg active:scale-95"
             >
               Vérifier mon éligibilité
               <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </Link>
+            </a>
             <a
               href="#pourquoi"
               className="inline-flex items-center justify-center sm:justify-start gap-2 text-white/70 hover:text-white text-sm font-medium transition-colors group py-1"
@@ -194,6 +195,11 @@ export default function RenovHabitatPage() {
           </div>
         </div>
       </section>
+
+      {/* ── FORMULAIRE D'ÉLIGIBILITÉ ──────────────────────────────── */}
+      <div id="eligibilite">
+        <EligibiliteForm />
+      </div>
 
       {/* ── 2. POURQUOI LEDX RÉNOV'HABITAT ───────────────────────── */}
       <section id="pourquoi" className="bg-white py-12 sm:py-20">

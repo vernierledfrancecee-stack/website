@@ -39,22 +39,10 @@ const avantages = [
 ];
 
 const profiles = [
-  {
-    title: "Propriétaire occupant",
-    desc: "Résidence principale",
-  },
-  {
-    title: "Propriétaire bailleur",
-    desc: "Logement loué",
-  },
-  {
-    title: "SCI / SARL / LMNP / SCPI",
-    desc: "Personnes morales",
-  },
-  {
-    title: "Bailleurs sociaux",
-    desc: "Parc social HLM",
-  },
+  { title: "Propriétaire occupant", desc: "Résidence principale" },
+  { title: "Propriétaire bailleur", desc: "Logement loué" },
+  { title: "SCI / SARL / LMNP / SCPI", desc: "Personnes morales" },
+  { title: "Bailleurs sociaux", desc: "Parc social HLM" },
 ];
 
 const criteres = [
@@ -73,8 +61,8 @@ const travaux = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
       </svg>
     ),
-    title: "Isolation des combles perdus",
-    desc: "Insufflation ou soufflage de laine minérale ou biosourcée en combles non aménageables.",
+    title: "Combles perdus",
+    desc: "Insufflation ou soufflage de laine minérale ou biosourcée.",
   },
   {
     icon: (
@@ -82,8 +70,8 @@ const travaux = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3l14 9-14 9V3z" />
       </svg>
     ),
-    title: "Isolation des rampants de toiture",
-    desc: "Isolation thermique des rampants et plafonds de combles aménagés ou aménageables.",
+    title: "Rampants de toiture",
+    desc: "Isolation thermique des combles aménagés ou aménageables.",
   },
   {
     icon: (
@@ -91,8 +79,8 @@ const travaux = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
       </svg>
     ),
-    title: "Isolation des murs",
-    desc: "Isolation par l'intérieur (ITI) ou par l'extérieur (ITE) des murs donnant sur l'extérieur.",
+    title: "Murs (ITI / ITE)",
+    desc: "Isolation par l'intérieur ou par l'extérieur des murs.",
   },
   {
     icon: (
@@ -100,8 +88,8 @@ const travaux = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
       </svg>
     ),
-    title: "Isolation des planchers bas",
-    desc: "Isolation des planchers séparant les locaux chauffés des sous-sols, caves ou vides sanitaires.",
+    title: "Planchers bas",
+    desc: "Isolation des planchers sur sous-sol, cave ou vide sanitaire.",
   },
   {
     icon: (
@@ -109,8 +97,8 @@ const travaux = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm0 8a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zm12 0a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
       </svg>
     ),
-    title: "Remplacement des fenêtres",
-    desc: "Pose de fenêtres double vitrage performantes (Uw ≤ 1,3 W/m².K) en remplacement des simples vitrages.",
+    title: "Fenêtres double vitrage",
+    desc: "Remplacement des simples vitrages (Uw ≤ 1,3 W/m².K).",
   },
 ];
 
@@ -123,7 +111,7 @@ const processSteps = [
   {
     num: "02",
     title: "Signature des documents avant travaux",
-    desc: "Devis détaillés, attestations sur l'honneur et engagements contractuels signés conformément à la réglementation CEE.",
+    desc: "Devis, attestations sur l'honneur et engagements contractuels signés conformément à la réglementation CEE.",
   },
   {
     num: "03",
@@ -147,8 +135,7 @@ export default function RenovHabitatPage() {
     <div className="pt-16 lg:pt-20">
 
       {/* ── 1. HERO ────────────────────────────────────────────────── */}
-      <section className="relative bg-[#0d1e3a] overflow-hidden min-h-[92svh] flex flex-col justify-center">
-        {/* Background image */}
+      <section className="relative bg-[#0d1e3a] overflow-hidden min-h-[88svh] flex flex-col justify-center">
         <Image
           src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=2000&q=80"
           alt="Belle maison individuelle rénovée"
@@ -157,45 +144,44 @@ export default function RenovHabitatPage() {
           priority
           sizes="100vw"
         />
-        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0d1e3a]/70 via-[#0d1e3a]/40 to-[#0d1e3a]/85" />
 
-        <div className="relative w-full max-w-5xl mx-auto px-6 sm:px-10 lg:px-8 py-20 sm:py-28">
+        <div className="relative w-full max-w-5xl mx-auto px-5 sm:px-10 lg:px-8 py-14 sm:py-28">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-[#1a9e75]/20 border border-[#1a9e75]/40 text-[#1a9e75] text-xs sm:text-sm font-semibold px-4 py-2 rounded-full mb-8">
+          <div className="inline-flex items-center gap-2 bg-[#1a9e75]/20 border border-[#1a9e75]/40 text-[#1a9e75] text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-5 sm:mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-[#1a9e75] shrink-0" />
             Fiche BAR-TH-174 · Mandataire agréé
           </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] tracking-tight mb-6 max-w-3xl">
+          {/* Headline — 3xl on small phones, 5xl on sm, 6xl on lg */}
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight mb-4 sm:mb-6 max-w-3xl">
             Votre maison rénovée,{" "}
             <span className="text-[#1a9e75]">financée par les CEE</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-white/60 text-base sm:text-lg max-w-xl mb-10 leading-relaxed">
+          <p className="text-white/60 text-sm sm:text-lg max-w-xl mb-7 sm:mb-10 leading-relaxed">
             LEDX Rénov&apos;Habitat vous accompagne de A à Z dans votre
             rénovation énergétique d&apos;ampleur
           </p>
 
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          {/* CTAs — stacked on mobile, inline on sm+ */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2.5 bg-[#1a9e75] hover:bg-[#147a5b] text-white font-semibold px-7 py-4 rounded-xl transition-all duration-200 shadow-sm hover:shadow-lg active:scale-95"
+              className="inline-flex items-center justify-center gap-2.5 bg-[#1a9e75] hover:bg-[#147a5b] text-white font-semibold px-7 py-3.5 sm:py-4 rounded-xl transition-all duration-200 shadow-sm hover:shadow-lg active:scale-95"
             >
               Vérifier mon éligibilité
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
             <a
               href="#pourquoi"
-              className="inline-flex items-center gap-2 text-white/70 hover:text-white text-sm font-medium transition-colors group"
+              className="inline-flex items-center justify-center sm:justify-start gap-2 text-white/70 hover:text-white text-sm font-medium transition-colors group py-1"
             >
               En savoir plus
-              <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <svg className="w-4 h-4 shrink-0 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </a>
@@ -204,28 +190,29 @@ export default function RenovHabitatPage() {
       </section>
 
       {/* ── 2. POURQUOI LEDX RÉNOV'HABITAT ───────────────────────── */}
-      <section id="pourquoi" className="bg-white py-16 sm:py-20">
+      <section id="pourquoi" className="bg-white py-12 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-block bg-[#1a9e75]/10 border border-[#1a9e75]/20 text-[#1a9e75] text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-block bg-[#1a9e75]/10 border border-[#1a9e75]/20 text-[#1a9e75] text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-3 sm:mb-4">
               Notre valeur ajoutée
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0d1e3a]">
+            <h2 className="text-xl sm:text-3xl font-bold text-[#0d1e3a]">
               Pourquoi LEDX Rénov&apos;Habitat ?
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {/* 1 col on mobile, 3 on sm+ */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             {avantages.map((item) => (
               <div
                 key={item.title}
-                className="bg-[#f8f9fa] border border-gray-100 rounded-2xl p-7 flex flex-col gap-4"
+                className="bg-[#f8f9fa] border border-gray-100 rounded-2xl p-5 sm:p-7 flex flex-row sm:flex-col gap-4"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#1a9e75]/10 flex items-center justify-center text-[#1a9e75] shrink-0">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#1a9e75]/10 flex items-center justify-center text-[#1a9e75] shrink-0">
                   {item.icon}
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#0d1e3a] text-lg mb-2">{item.title}</h3>
+                  <h3 className="font-bold text-[#0d1e3a] text-base sm:text-lg mb-1 sm:mb-2">{item.title}</h3>
                   <p className="text-[#2c2c2a]/60 text-sm leading-relaxed">{item.desc}</p>
                 </div>
               </div>
@@ -235,33 +222,33 @@ export default function RenovHabitatPage() {
       </section>
 
       {/* ── 3. QUI PEUT EN BÉNÉFICIER ─────────────────────────────── */}
-      <section className="bg-[#f8f9fa] py-16 sm:py-20">
+      <section className="bg-[#f8f9fa] py-12 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-block bg-[#1a9e75]/10 border border-[#1a9e75]/20 text-[#1a9e75] text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-block bg-[#1a9e75]/10 border border-[#1a9e75]/20 text-[#1a9e75] text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-3 sm:mb-4">
               Éligibilité
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0d1e3a]">
+            <h2 className="text-xl sm:text-3xl font-bold text-[#0d1e3a]">
               Êtes-vous éligible ?
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+          {/* 2 cols on mobile, 4 on lg */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-6 sm:mb-8">
             {profiles.map((profile) => (
               <div
                 key={profile.title}
-                className="bg-white border border-gray-100 rounded-2xl p-6 flex flex-col items-center text-center gap-4 hover:border-[#1a9e75]/30 hover:shadow-md transition-all duration-200"
+                className="bg-white border border-gray-100 rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center gap-3 sm:gap-4 hover:border-[#1a9e75]/30 hover:shadow-md transition-all duration-200"
               >
-                {/* House icon */}
-                <div className="w-12 h-12 rounded-xl bg-[#0d1e3a]/5 flex items-center justify-center text-[#0d1e3a]">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#0d1e3a]/5 flex items-center justify-center text-[#0d1e3a]">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                   </svg>
                 </div>
                 <div>
-                  <div className="font-bold text-[#0d1e3a] mb-1">{profile.title}</div>
-                  <div className="text-sm text-[#2c2c2a]/55 mb-3">{profile.desc}</div>
-                  <span className="inline-block bg-[#1a9e75]/10 text-[#1a9e75] text-xs font-semibold px-3 py-1 rounded-full border border-[#1a9e75]/20">
+                  <div className="font-bold text-[#0d1e3a] text-sm sm:text-base mb-0.5 sm:mb-1">{profile.title}</div>
+                  <div className="text-xs sm:text-sm text-[#2c2c2a]/55 mb-2 sm:mb-3">{profile.desc}</div>
+                  <span className="inline-block bg-[#1a9e75]/10 text-[#1a9e75] text-xs font-semibold px-2.5 sm:px-3 py-1 rounded-full border border-[#1a9e75]/20">
                     Éligible
                   </span>
                 </div>
@@ -269,36 +256,37 @@ export default function RenovHabitatPage() {
             ))}
           </div>
 
-          <p className="text-center text-sm text-[#2c2c2a]/50">
+          <p className="text-center text-xs sm:text-sm text-[#2c2c2a]/50">
             ⚠️ Résidences secondaires et logements classés A/B non éligibles
           </p>
         </div>
       </section>
 
       {/* ── 4. CRITÈRES D'ÉLIGIBILITÉ ─────────────────────────────── */}
-      <section className="bg-white py-16 sm:py-20">
+      <section className="bg-white py-12 sm:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-block bg-[#1a9e75]/10 border border-[#1a9e75]/20 text-[#1a9e75] text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-block bg-[#1a9e75]/10 border border-[#1a9e75]/20 text-[#1a9e75] text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-3 sm:mb-4">
               Conditions
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0d1e3a]">
+            <h2 className="text-xl sm:text-3xl font-bold text-[#0d1e3a]">
               Les conditions à remplir
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* 1 col on mobile, 2 on sm+ */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {criteres.map((critere) => (
               <div
                 key={critere}
-                className="flex items-start gap-3 bg-[#f8f9fa] border border-gray-100 rounded-xl p-4"
+                className="flex items-start gap-3 bg-[#f8f9fa] border border-gray-100 rounded-xl p-3.5 sm:p-4"
               >
-                <div className="w-6 h-6 rounded-full bg-[#1a9e75]/15 flex items-center justify-center shrink-0 mt-0.5">
-                  <svg className="w-3.5 h-3.5 text-[#1a9e75]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#1a9e75]/15 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#1a9e75]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <p className="text-[#2c2c2a]/80 text-sm leading-relaxed">{critere}</p>
+                <p className="text-[#2c2c2a]/80 text-xs sm:text-sm leading-relaxed">{critere}</p>
               </div>
             ))}
           </div>
@@ -306,68 +294,67 @@ export default function RenovHabitatPage() {
       </section>
 
       {/* ── 5. TRAVAUX ÉLIGIBLES ──────────────────────────────────── */}
-      <section className="bg-[#f8f9fa] py-16 sm:py-20">
+      <section className="bg-[#f8f9fa] py-12 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-block bg-[#1a9e75]/10 border border-[#1a9e75]/20 text-[#1a9e75] text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-block bg-[#1a9e75]/10 border border-[#1a9e75]/20 text-[#1a9e75] text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-3 sm:mb-4">
               Travaux pris en charge
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0d1e3a]">
+            <h2 className="text-xl sm:text-3xl font-bold text-[#0d1e3a]">
               Quels travaux sont pris en charge ?
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {/* 2 cols on mobile, 2 on sm, 3 on lg */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
             {travaux.map((item) => (
               <div
                 key={item.title}
-                className="bg-white border border-gray-100 rounded-2xl p-6 flex flex-col gap-4 hover:border-[#1a9e75]/30 hover:shadow-md transition-all duration-200"
+                className="bg-white border border-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 hover:border-[#1a9e75]/30 hover:shadow-md transition-all duration-200"
               >
-                <div className="w-11 h-11 rounded-xl bg-[#1a9e75]/10 flex items-center justify-center text-[#1a9e75] shrink-0">
+                <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-[#1a9e75]/10 flex items-center justify-center text-[#1a9e75] shrink-0">
                   {item.icon}
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#0d1e3a] mb-1.5">{item.title}</h3>
-                  <p className="text-sm text-[#2c2c2a]/60 leading-relaxed">{item.desc}</p>
+                  <h3 className="font-bold text-[#0d1e3a] text-sm sm:text-base mb-1 sm:mb-1.5">{item.title}</h3>
+                  <p className="text-xs sm:text-sm text-[#2c2c2a]/60 leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             ))}
-            {/* Last card spans 2 columns on lg to balance the 5-item grid */}
-            <div className="hidden lg:block" aria-hidden="true" />
           </div>
         </div>
       </section>
 
       {/* ── 6. NOTRE PROCESSUS ────────────────────────────────────── */}
-      <section className="bg-white py-16 sm:py-20">
+      <section className="bg-white py-12 sm:py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-block bg-[#1a9e75]/10 border border-[#1a9e75]/20 text-[#1a9e75] text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-block bg-[#1a9e75]/10 border border-[#1a9e75]/20 text-[#1a9e75] text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-3 sm:mb-4">
               Méthodologie
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0d1e3a]">
+            <h2 className="text-xl sm:text-3xl font-bold text-[#0d1e3a]">
               Notre processus
             </h2>
-            <p className="text-[#2c2c2a]/60 mt-3 text-sm sm:text-base">
+            <p className="text-[#2c2c2a]/60 mt-2 sm:mt-3 text-xs sm:text-base">
               De l&apos;audit à la valorisation, LEDX Rénov&apos;Habitat orchestre chaque étape pour vous.
             </p>
           </div>
 
           <div className="relative">
-            {/* Vertical line */}
-            <div className="absolute left-[27px] top-8 bottom-8 w-px bg-gray-100" aria-hidden="true" />
+            {/* Vertical connector — positioned at center of the step badge */}
+            <div className="absolute left-[23px] sm:left-[27px] top-10 bottom-10 w-px bg-gray-100" aria-hidden="true" />
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {processSteps.map((step) => (
-                <div key={step.num} className="flex items-start gap-5">
-                  {/* Step number */}
-                  <div className="w-14 h-14 rounded-2xl bg-[#0d1e3a] text-white font-bold text-sm flex items-center justify-center shrink-0 relative z-10 shadow-sm">
+                <div key={step.num} className="flex items-start gap-3 sm:gap-5">
+                  {/* Step badge — smaller on mobile */}
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-[#0d1e3a] text-white font-bold text-xs sm:text-sm flex items-center justify-center shrink-0 relative z-10 shadow-sm">
                     {step.num}
                   </div>
                   {/* Step content */}
-                  <div className="bg-[#f8f9fa] border border-gray-100 rounded-xl p-5 flex-1 min-w-0">
-                    <div className="font-bold text-[#0d1e3a] mb-1">{step.title}</div>
-                    <div className="text-sm text-[#2c2c2a]/60 leading-relaxed">{step.desc}</div>
+                  <div className="bg-[#f8f9fa] border border-gray-100 rounded-xl p-3.5 sm:p-5 flex-1 min-w-0">
+                    <div className="font-bold text-[#0d1e3a] text-sm sm:text-base mb-0.5 sm:mb-1">{step.title}</div>
+                    <div className="text-xs sm:text-sm text-[#2c2c2a]/60 leading-relaxed">{step.desc}</div>
                   </div>
                 </div>
               ))}
@@ -377,23 +364,24 @@ export default function RenovHabitatPage() {
       </section>
 
       {/* ── 7. CTA FINALE ─────────────────────────────────────────── */}
-      <section className="bg-[#0d1e3a] py-16 sm:py-24">
+      <section className="bg-[#0d1e3a] py-14 sm:py-24">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-block bg-[#1a9e75]/20 border border-[#1a9e75]/30 text-[#1a9e75] text-sm font-semibold px-4 py-1.5 rounded-full mb-6">
+          <div className="inline-block bg-[#1a9e75]/20 border border-[#1a9e75]/30 text-[#1a9e75] text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-4 sm:mb-6">
             Sans engagement
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4">
             Prêt à rénover votre maison ?
           </h2>
-          <p className="text-white/60 text-base sm:text-lg mb-10">
+          <p className="text-white/60 text-sm sm:text-lg mb-8 sm:mb-10">
             Réponse sous 24h — Sans engagement
           </p>
+          {/* Full width on mobile, auto on sm+ */}
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2.5 bg-[#1a9e75] hover:bg-[#147a5b] text-white font-bold px-8 py-4 rounded-xl transition-all duration-200 shadow-sm hover:shadow-lg active:scale-95"
+            className="inline-flex w-full sm:w-auto items-center justify-center gap-2.5 bg-[#1a9e75] hover:bg-[#147a5b] text-white font-bold px-8 py-4 rounded-xl transition-all duration-200 shadow-sm hover:shadow-lg active:scale-95"
           >
             Demander mon étude d&apos;éligibilité
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Link>

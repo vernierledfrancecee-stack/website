@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import RenovHabitatLogo from "@/components/RenovHabitatLogo";
 
 export const metadata: Metadata = {
   title: "LEDX Rénov'Habitat — Rénovation énergétique d'ampleur financée par les CEE",
@@ -137,16 +138,21 @@ export default function RenovHabitatPage() {
       {/* ── 1. HERO ────────────────────────────────────────────────── */}
       <section className="relative bg-[#0d1e3a] overflow-hidden min-h-[88svh] flex flex-col justify-center">
         <Image
-          src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=2000&q=80"
-          alt="Belle maison individuelle rénovée"
+          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80"
+          alt="Maison individuelle rénovée — LEDX Rénov'Habitat"
           fill
-          className="object-cover opacity-25"
+          className="object-cover opacity-30"
           priority
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0d1e3a]/70 via-[#0d1e3a]/40 to-[#0d1e3a]/85" />
 
         <div className="relative w-full max-w-5xl mx-auto px-5 sm:px-10 lg:px-8 py-14 sm:py-28">
+          {/* Logo marque résidentielle */}
+          <div className="mb-6 sm:mb-10">
+            <RenovHabitatLogo variant="light" size="md" />
+          </div>
+
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-[#1a9e75]/20 border border-[#1a9e75]/40 text-[#1a9e75] text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-5 sm:mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-[#1a9e75] shrink-0" />

@@ -27,11 +27,11 @@ type Status = "idle" | "sending" | "success" | "error";
 
 // ─── Données des options ──────────────────────────────────────────────────────
 
-const profilOptions: { value: Profil; label: string; icon: string; eligible: boolean }[] = [
-  { value: "occupant", label: "Propriétaire occupant", icon: "🏠", eligible: true },
-  { value: "bailleur", label: "Propriétaire bailleur", icon: "🔑", eligible: true },
-  { value: "societe",  label: "SCI / Société (LMNP, SCPI…)", icon: "🏢", eligible: true },
-  { value: "locataire", label: "Locataire", icon: "❌", eligible: false },
+const profilOptions: { value: Profil; label: string; icon: string }[] = [
+  { value: "occupant",  label: "Propriétaire occupant",    icon: "🏠" },
+  { value: "bailleur",  label: "Propriétaire bailleur",    icon: "🔑" },
+  { value: "societe",   label: "SCI / Société (LMNP, SCPI…)", icon: "🏢" },
+  { value: "locataire", label: "Locataire",                icon: "🏡" },
 ];
 
 const classeOptions: { value: Classe; label: string; color: string; textColor: string; eligible: boolean }[] = [
@@ -141,13 +141,8 @@ export default function EligibiliteForm() {
     setStatus("idle");
   };
 
-  // ── Étape 1 : Profil ──
+  // ── Étape 1 : Profil — toutes les options avancent ──
   const handleProfil = (profil: Profil) => {
-    const opt = profilOptions.find((o) => o.value === profil)!;
-    if (!opt.eligible) {
-      setNonEligible("Les locataires ne peuvent pas bénéficier des CEE. Rapprochez-vous de votre propriétaire.");
-      return;
-    }
     setAnswers((a) => ({ ...a, profil }));
     setStep(2);
   };
@@ -287,16 +282,10 @@ export default function EligibiliteForm() {
                       <button
                         key={opt.value}
                         onClick={() => handleProfil(opt.value)}
-                        className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all duration-150 ${
-                          opt.eligible
-                            ? "border-gray-200 hover:border-[#1a9e75] hover:bg-[#1a9e75]/5 active:scale-[0.98]"
-                            : "border-gray-100 bg-gray-50 hover:border-red-200 hover:bg-red-50/60 active:scale-[0.98]"
-                        }`}
+                        className="flex items-center gap-3 p-4 rounded-xl border border-gray-200 text-left hover:border-[#1a9e75] hover:bg-[#1a9e75]/5 transition-all duration-150 active:scale-[0.98]"
                       >
                         <span className="text-2xl">{opt.icon}</span>
-                        <span className={`font-medium text-sm ${opt.eligible ? "text-[#0d1e3a]" : "text-gray-400"}`}>
-                          {opt.label}
-                        </span>
+                        <span className="font-medium text-sm text-[#0d1e3a]">{opt.label}</span>
                       </button>
                     ))}
                   </div>
@@ -331,6 +320,19 @@ export default function EligibiliteForm() {
                   <p className="text-xs text-[#2c2c2a]/45 text-center">
                     Classes A et B : déjà performantes, non éligibles BAR-TH-174
                   </p>
+
+                  {/* Note discrète locataire */}
+                  {answers.profil === "locataire" && (
+                    <div className="mt-4 flex items-start gap-2.5 bg-[#1a9e75]/[0.06] border border-[#1a9e75]/20 rounded-xl px-4 py-3">
+                      <svg className="w-4 h-4 text-[#1a9e75] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <p className="text-xs text-[#2c2c2a]/65 leading-relaxed">
+                        En tant que locataire, votre profil de revenus peut permettre une meilleure prime à votre propriétaire. Nous vous expliquons tout lors de notre appel.
+                      </p>
+                    </div>
+                  )}
+
                   <div className="mt-5 flex justify-start">
                     <button onClick={() => setStep(1)} className="inline-flex items-center gap-1.5 text-xs text-[#2c2c2a]/40 hover:text-[#2c2c2a]/70 transition-colors">
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

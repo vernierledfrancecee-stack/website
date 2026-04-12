@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import RenovHabitatLogo from "@/components/RenovHabitatLogo";
+import EligibiliteForm from "@/components/renov-habitat/EligibiliteForm";
 
 export const metadata: Metadata = {
   title: "LEDX Rénov'Habitat — Rénovation énergétique d'ampleur financée par les CEE",
@@ -137,16 +139,21 @@ export default function RenovHabitatPage() {
       {/* ── 1. HERO ────────────────────────────────────────────────── */}
       <section className="relative bg-[#0d1e3a] overflow-hidden min-h-[88svh] flex flex-col justify-center">
         <Image
-          src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=2000&q=80"
-          alt="Belle maison individuelle rénovée"
+          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80"
+          alt="Maison individuelle rénovée — LEDX Rénov'Habitat"
           fill
-          className="object-cover opacity-25"
+          className="object-cover opacity-30"
           priority
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0d1e3a]/70 via-[#0d1e3a]/40 to-[#0d1e3a]/85" />
 
         <div className="relative w-full max-w-5xl mx-auto px-5 sm:px-10 lg:px-8 py-14 sm:py-28">
+          {/* Logo marque résidentielle */}
+          <div className="mb-6 sm:mb-10">
+            <RenovHabitatLogo variant="light" size="md" />
+          </div>
+
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-[#1a9e75]/20 border border-[#1a9e75]/40 text-[#1a9e75] text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-5 sm:mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-[#1a9e75] shrink-0" />
@@ -167,15 +174,15 @@ export default function RenovHabitatPage() {
 
           {/* CTAs — stacked on mobile, inline on sm+ */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-            <Link
-              href="/contact"
+            <a
+              href="#eligibilite"
               className="inline-flex items-center justify-center gap-2.5 bg-[#1a9e75] hover:bg-[#147a5b] text-white font-semibold px-7 py-3.5 sm:py-4 rounded-xl transition-all duration-200 shadow-sm hover:shadow-lg active:scale-95"
             >
               Vérifier mon éligibilité
               <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </Link>
+            </a>
             <a
               href="#pourquoi"
               className="inline-flex items-center justify-center sm:justify-start gap-2 text-white/70 hover:text-white text-sm font-medium transition-colors group py-1"
@@ -188,6 +195,11 @@ export default function RenovHabitatPage() {
           </div>
         </div>
       </section>
+
+      {/* ── FORMULAIRE D'ÉLIGIBILITÉ ──────────────────────────────── */}
+      <div id="eligibilite">
+        <EligibiliteForm />
+      </div>
 
       {/* ── 2. POURQUOI LEDX RÉNOV'HABITAT ───────────────────────── */}
       <section id="pourquoi" className="bg-white py-12 sm:py-20">

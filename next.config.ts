@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+// Non-CSP security headers applied to all routes.
+// CSP is managed per-route in middleware.ts to allow Monday.com iframes on /simulateur-interne.
 const securityHeaders = [
   // Prevent MIME-type sniffing
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -13,26 +15,6 @@ const securityHeaders = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
   // DNS prefetch control
   { key: "X-DNS-Prefetch-Control", value: "on" },
-  // Content Security Policy
-  // 'unsafe-inline' required for Tailwind inline styles; 'unsafe-eval' for Next.js dev HMR (harmless in prod)
-  {
-    key: "Content-Security-Policy",
-    value: [
-      "default-src 'self'",
-      "script-src 'self' 'unsafe-inline'",
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https://images.unsplash.com",
-      "font-src 'self'",
-      "connect-src 'self'",
-      "media-src 'none'",
-      "object-src 'none'",
-      "frame-src 'none'",
-      "frame-ancestors 'none'",
-      "base-uri 'self'",
-      "form-action 'self'",
-      "upgrade-insecure-requests",
-    ].join("; "),
-  },
 ];
 
 const nextConfig: NextConfig = {

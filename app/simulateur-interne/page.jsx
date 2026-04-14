@@ -843,8 +843,8 @@ export default function SimulateurInterne() {
           </div>
         </div>
 
-        {/* STEPPER */}
-        <div className="bg-white rounded-xl p-3 mb-4 flex items-center overflow-x-auto print:hidden">
+        {/* STEPPER — masqué sur mobile (le header montre déjà étape X/5 + barre) */}
+        <div className="hidden sm:flex bg-white rounded-xl p-3 mb-4 items-center overflow-x-auto print:hidden">
           {STEPS.map((s, i) => (
             <div key={s.num} className="flex items-center flex-shrink-0">
               <div

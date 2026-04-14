@@ -7,10 +7,7 @@ export const viewport: Viewport = {
   maximumScale: 5,
   themeColor: "#0d1e3a",
 };
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
-import ChatAgent from "@/components/ChatAgent";
+import ConditionalShell from "@/components/layout/ConditionalShell";
 import PageTracker from "@/components/PageTracker";
 
 export const metadata: Metadata = {
@@ -65,11 +62,9 @@ export default function RootLayout({
   return (
     <html lang="fr" className="h-full">
       <body className="min-h-screen flex flex-col antialiased">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <WhatsAppButton />
-        <ChatAgent />
+        {/* ConditionalShell hides Navbar/Footer/widgets on standalone routes
+            (/simulateur-interne, /admin) that are embedded or used as internal tools. */}
+        <ConditionalShell>{children}</ConditionalShell>
         <PageTracker />
       </body>
     </html>

@@ -159,3 +159,20 @@ model WaitlistRenovGlobale {
   notifie   Boolean  @default(false)
   createdAt DateTime @default(now())
 }
+
+model RapportBTH174 {
+  id              String   @id @default(cuid())
+  reference       String   @unique
+  // Snapshot du formulaire complet
+  donneesJson     Json
+  // Résultats calculés
+  eligible        Boolean
+  scenarios       String[]
+  niveauPrecarite String
+  sauts           Int      @default(0)
+  // Méta
+  nomBeneficiaire String
+  adresse         String?
+  operateur       String?
+  createdAt       DateTime @default(now())
+}

@@ -1,12 +1,12 @@
 import type { NextConfig } from "next";
 
-// Non-CSP security headers applied to all routes.
-// CSP is managed per-route in middleware.ts to allow Monday.com iframes on /simulateur-interne.
+// Non-CSP/non-framing security headers applied to all routes.
+// CSP and X-Frame-Options are managed per-route in middleware.ts so that
+// /simulateur-interne can be embedded inside Monday.com while all other pages
+// keep the default DENY policy.
 const securityHeaders = [
   // Prevent MIME-type sniffing
   { key: "X-Content-Type-Options", value: "nosniff" },
-  // Prevent clickjacking
-  { key: "X-Frame-Options", value: "DENY" },
   // Force HTTPS for 2 years (preload-ready)
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
   // Limit referrer information to same-origin

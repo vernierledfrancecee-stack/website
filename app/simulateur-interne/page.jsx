@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // ─── CONFIGURATION ────────────────────────────────────────────────────────────
 // URL d'embed Monday.com — configurez via NEXT_PUBLIC_MONDAY_EMBED_URL dans .env
@@ -306,6 +306,34 @@ export default function SimulateurInterne() {
   });
 
   const result = step === 5 ? computeEligibility(d) : null;
+
+  // ── AUTO-SAUVEGARDE RAPPORT (step 5) ────────────────────────────────────────
+  const savedRef = useRef(false);
+  useEffect(() => {
+    if (step !== 5 || savedRef.current) return;
+    const r = computeEligibility(d);
+    const nomBenef = d.proprietaire === "non"
+      ? `${d.prenomProprio} ${d.nomProprio}`.trim()
+      : `${d.prenom} ${d.nom}`.trim();
+    const adresseFull = [d.adresse, d.cp, d.ville].filter(Boolean).join(", ");
+
+    savedRef.current = true;
+    fetch("/api/simulateur-interne/rapport", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        reference: ref,
+        donneesJson: d,
+        eligible: r.eligible,
+        scenarios: r.scenarios,
+        niveauPrecarite: r.niveauPrecarite,
+        sauts: r.sauts,
+        nomBeneficiaire: nomBenef,
+        adresse: adresseFull || null,
+        operateur: d.operateur || null,
+      }),
+    }).catch(() => { /* silencieux — l'historique est best-effort */ });
+  }, [step]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const canNext = () => {
     if (step === 1) {
@@ -820,7 +848,7 @@ export default function SimulateurInterne() {
               onClick={() => window.print()}
               className="w-full sm:w-auto px-5 py-3 sm:py-2.5 rounded-xl bg-[#0B1D3A] text-white text-sm font-semibold hover:bg-[#142952] transition-colors cursor-pointer text-center"
             >
-              Imprimer / Exporter PDF
+              Exporter en PDF
             </button>
           </div>
 

@@ -31,8 +31,7 @@ function computeEligibility(d) {
 
   if (d.typeBien !== "maison")
     blocages.push("Le logement doit être une maison individuelle (pas un appartement ni une copropriété).");
-  if (d.proprietaire === "non")
-    blocages.push("Le bénéficiaire doit être propriétaire (occupant ou bailleur) — un locataire n'est pas éligible.");
+  // Locataire : pas de blocage — le proprio est le bénéficiaire CEE, le RFR du locataire détermine la précarité
   if (d.fenetresBoisSV === "oui")
     blocages.push("Présence de fenêtres bois simple vitrage → dossier non éligible BAR-TH-174.");
   if (d.btd === "oui" && ["pac_ae", "pac_aa"].includes(d.chauffage))
@@ -182,6 +181,8 @@ const INITIAL = {
   chauffage: "", btd: "", dpeBefore: "", dpeAfter: "",
   isolCombles: "", isolSousSol: "", iteIti: "", vmc: "", vmcType: "",
   apporteur: "", operateur: "",
+  // Renseignés uniquement quand propriétaire = "non" (locataire)
+  nomProprio: "", prenomProprio: "", telProprio: "", emailProprio: "",
 };
 
 // ─── RÉFÉRENCE DOSSIER ────────────────────────────────────────────────────────
@@ -307,7 +308,12 @@ export default function SimulateurInterne() {
   const result = step === 5 ? computeEligibility(d) : null;
 
   const canNext = () => {
-    if (step === 1) return d.nom && d.statut && d.proprietaire && d.rfr && d.nbPersonnes && d.zone;
+    if (step === 1) {
+      const base = d.nom && d.statut && d.proprietaire && d.rfr && d.nbPersonnes && d.zone;
+      if (!base) return false;
+      if (d.proprietaire === "non") return !!(d.nomProprio && d.prenomProprio);
+      return true;
+    }
     if (step === 2) return d.typeBien && d.anneeConstruction && d.surface && d.fenetresBoisSV && d.adresse;
     if (step === 3) return d.chauffage && d.dpeBefore && d.dpeAfter;
     if (step === 4) return d.isolCombles && d.vmc;
@@ -351,20 +357,41 @@ export default function SimulateurInterne() {
           </Field>
         </div>
 
-        <Field label="Propriétaire du logement ?" required>
+        <Field label="Statut vis-à-vis du logement" required>
           <RadioGroup value={d.proprietaire} onChange={v => set("proprietaire", v)}
             options={[
-              { v: "occupant", l: "Oui — occupant" },
-              { v: "bailleur", l: "Oui — bailleur" },
-              { v: "non",      l: "Non (locataire)" },
+              { v: "occupant", l: "Proprio — occupant" },
+              { v: "bailleur", l: "Proprio — bailleur" },
+              { v: "non",      l: "Locataire" },
             ]}
           />
-          {d.proprietaire === "non" && (
-            <InlineAlert type="error">
-              Un locataire ne peut pas être bénéficiaire BAR-TH-174.
-            </InlineAlert>
-          )}
         </Field>
+
+        {d.proprietaire === "non" && (
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 space-y-3">
+            <p className="text-blue-800 text-xs font-semibold">
+              Le bénéficiaire CEE sera le propriétaire du logement.
+              Le RFR du locataire (occupant) détermine le niveau de précarité.
+              Renseignez les coordonnées du propriétaire ci-dessous.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <Field label="Nom du propriétaire" required>
+                <TextInput value={d.nomProprio} onChange={v => set("nomProprio", v)} placeholder="MARTIN" />
+              </Field>
+              <Field label="Prénom du propriétaire" required>
+                <TextInput value={d.prenomProprio} onChange={v => set("prenomProprio", v)} placeholder="Pierre" />
+              </Field>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <Field label="Tél. propriétaire">
+                <TextInput value={d.telProprio} onChange={v => set("telProprio", v)} placeholder="06 XX XX XX XX" />
+              </Field>
+              <Field label="Email propriétaire">
+                <TextInput value={d.emailProprio} onChange={v => set("emailProprio", v)} placeholder="proprio@email.fr" />
+              </Field>
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           <Field label="RFR annuel (€)" required>
@@ -627,15 +654,25 @@ export default function SimulateurInterne() {
             {/* 1. Bénéficiaire */}
             <div>
               <RSection titre="1 — Identification bénéficiaire" />
-              <RRow label="Nom & Prénom"       value={`${d.prenom} ${d.nom}`.trim()} highlight />
-              <RRow label="Statut juridique"   value={d.statut?.toUpperCase()} />
-              <RRow label="Propriétaire"        value={
-                d.proprietaire === "occupant" ? "Oui — occupant"
-                : d.proprietaire === "bailleur" ? "Oui — bailleur"
-                : "Non (locataire)"
-              } />
-              {d.email && <RRow label="Email"      value={d.email} />}
-              {d.tel   && <RRow label="Téléphone"  value={d.tel} />}
+              {d.proprietaire === "non" ? (
+                <>
+                  <RRow label="Occupant (locataire)"  value={`${d.prenom} ${d.nom}`.trim()} />
+                  {d.email && <RRow label="Email occupant"    value={d.email} />}
+                  {d.tel   && <RRow label="Tél. occupant"     value={d.tel} />}
+                  <RRow label="Propriétaire (bénéf. CEE)" value={`${d.prenomProprio} ${d.nomProprio}`.trim()} highlight />
+                  {d.telProprio   && <RRow label="Tél. propriétaire"   value={d.telProprio} />}
+                  {d.emailProprio && <RRow label="Email propriétaire"  value={d.emailProprio} />}
+                  <RRow label="Statut juridique"  value={d.statut?.toUpperCase()} />
+                </>
+              ) : (
+                <>
+                  <RRow label="Nom & Prénom"     value={`${d.prenom} ${d.nom}`.trim()} highlight />
+                  <RRow label="Statut juridique" value={d.statut?.toUpperCase()} />
+                  <RRow label="Propriétaire"      value={d.proprietaire === "occupant" ? "Oui — occupant" : "Oui — bailleur"} />
+                  {d.email && <RRow label="Email"      value={d.email} />}
+                  {d.tel   && <RRow label="Téléphone"  value={d.tel} />}
+                </>
+              )}
             </div>
 
             {/* 2. Bien immobilier */}

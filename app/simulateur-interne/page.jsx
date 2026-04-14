@@ -820,7 +820,7 @@ export default function SimulateurInterne() {
               onClick={() => window.print()}
               className="w-full sm:w-auto px-5 py-3 sm:py-2.5 rounded-xl bg-[#0B1D3A] text-white text-sm font-semibold hover:bg-[#142952] transition-colors cursor-pointer text-center"
             >
-              Imprimer / Exporter PDF
+              Exporter en PDF
             </button>
           </div>
 

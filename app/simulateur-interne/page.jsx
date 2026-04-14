@@ -283,9 +283,9 @@ function RSection({ titre }) {
 function RRow({ label, value, highlight }) {
   if (!value && value !== 0) return null;
   return (
-    <div className="flex gap-2 py-1 border-b border-gray-50 last:border-0">
-      <span className="text-gray-400 text-xs w-44 flex-shrink-0 leading-relaxed pt-0.5">{label}</span>
-      <span className={`text-sm flex-1 ${highlight ? "font-bold text-[#0B1D3A]" : "font-medium text-[#1a2a40]"}`}>
+    <div className="flex gap-2 py-1.5 border-b border-gray-50 last:border-0">
+      <span className="text-gray-400 text-xs w-32 sm:w-44 flex-shrink-0 leading-relaxed pt-0.5">{label}</span>
+      <span className={`text-sm flex-1 min-w-0 break-words ${highlight ? "font-bold text-[#0B1D3A]" : "font-medium text-[#1a2a40]"}`}>
         {value}
       </span>
     </div>
@@ -342,7 +342,7 @@ export default function SimulateurInterne() {
           />
         </Field>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Field label="Email">
             <TextInput value={d.email} onChange={v => set("email", v)} placeholder="jean@email.fr" />
           </Field>
@@ -366,28 +366,28 @@ export default function SimulateurInterne() {
           )}
         </Field>
 
-        <div className="grid grid-cols-3 gap-3">
-          <div className="col-span-1">
-            <Field label="RFR annuel (€)" required>
-              <TextInput value={d.rfr} onChange={v => set("rfr", v)} prefix="€" placeholder="25 000" type="number" />
-            </Field>
-          </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <Field label="RFR annuel (€)" required>
+            <TextInput value={d.rfr} onChange={v => set("rfr", v)} prefix="€" placeholder="25 000" type="number" />
+          </Field>
           <Field label="Personnes au foyer" required>
             <SelectInput value={d.nbPersonnes} onChange={v => set("nbPersonnes", v)}
               options={["1","2","3","4","5"].map(n => ({ v: n, l: n === "5" ? "5 ou +" : n }))}
             />
           </Field>
-          <Field label="Zone géographique" required>
-            <SelectInput value={d.zone} onChange={v => set("zone", v)}
-              options={[
-                { v: "A",  l: "Zone A (IDF, PACA…)" },
-                { v: "BC", l: "Zone B / C" },
-              ]}
-            />
-          </Field>
+          <div className="col-span-2 sm:col-span-1">
+            <Field label="Zone géographique" required>
+              <SelectInput value={d.zone} onChange={v => set("zone", v)}
+                options={[
+                  { v: "A",  l: "Zone A (IDF, PACA…)" },
+                  { v: "BC", l: "Zone B / C" },
+                ]}
+              />
+            </Field>
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 pt-1 border-t border-gray-100">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 border-t border-gray-100">
           <Field label="Opérateur LEDX">
             <TextInput value={d.operateur} onChange={v => set("operateur", v)} placeholder="Votre prénom" />
           </Field>
@@ -431,7 +431,7 @@ export default function SimulateurInterne() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="Année de construction" required>
             <RadioGroup value={d.anneeConstruction} onChange={v => set("anneeConstruction", v)}
               options={[
@@ -474,7 +474,7 @@ export default function SimulateurInterne() {
           />
         </Field>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           <Field label="Classe DPE initiale" required>
             <RadioGroup value={d.dpeBefore} onChange={v => set("dpeBefore", v)}
               options={["A","B","C","D","E","F","G"].map(c => ({ v: c, l: c }))}
@@ -548,20 +548,20 @@ export default function SimulateurInterne() {
         <div className="space-y-5">
 
           {/* ── EN-TÊTE RAPPORT ── */}
-          <div className="bg-[#0B1D3A] rounded-2xl p-5 print:rounded-none">
-            <div className="flex items-start justify-between gap-4">
+          <div className="bg-[#0B1D3A] rounded-2xl p-4 sm:p-5 print:rounded-none">
+            <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <div className="text-[#3EC878] text-xs font-bold uppercase tracking-widest mb-1">
                   Rapport technique — Bureau d&apos;études
                 </div>
-                <div className="text-white text-2xl font-black tracking-tight">LEDX ÉNERGIE</div>
+                <div className="text-white text-xl sm:text-2xl font-black tracking-tight">LEDX ÉNERGIE</div>
                 <div className="text-white/50 text-xs mt-1">
                   Fiche BAR-TH-174 · Rénovation Énergétique Globale
                 </div>
               </div>
               <div className="text-right flex-shrink-0">
                 <div className="text-white/40 text-xs uppercase tracking-wider">Dossier</div>
-                <div className="text-white font-mono font-bold">{ref}</div>
+                <div className="text-white font-mono font-bold text-sm">{ref}</div>
                 <div className="text-white/40 text-xs mt-1">{dateRapport}</div>
               </div>
             </div>
@@ -772,16 +772,16 @@ export default function SimulateurInterne() {
           )}
 
           {/* ── ACTIONS ── */}
-          <div className="flex gap-3 flex-wrap print:hidden">
+          <div className="flex flex-col sm:flex-row gap-3 print:hidden">
             <button
               onClick={reset}
-              className="px-5 py-2.5 rounded-xl border border-gray-300 bg-white text-[#0B1D3A] text-sm font-semibold hover:bg-gray-50 transition-colors cursor-pointer"
+              className="w-full sm:w-auto px-5 py-3 sm:py-2.5 rounded-xl border border-gray-300 bg-white text-[#0B1D3A] text-sm font-semibold hover:bg-gray-50 transition-colors cursor-pointer text-center"
             >
               ← Nouveau dossier
             </button>
             <button
               onClick={() => window.print()}
-              className="px-5 py-2.5 rounded-xl bg-[#0B1D3A] text-white text-sm font-semibold hover:bg-[#142952] transition-colors cursor-pointer"
+              className="w-full sm:w-auto px-5 py-3 sm:py-2.5 rounded-xl bg-[#0B1D3A] text-white text-sm font-semibold hover:bg-[#142952] transition-colors cursor-pointer text-center"
             >
               Imprimer / Exporter PDF
             </button>
@@ -816,7 +816,7 @@ export default function SimulateurInterne() {
 
   // ── RENDU PRINCIPAL ─────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 print:bg-white print:py-0 print:px-0">
+    <div className="min-h-screen bg-gray-50 py-4 sm:py-8 px-3 sm:px-4 print:bg-white print:py-0 print:px-0">
       <div className="max-w-2xl mx-auto print:max-w-none">
 
         {/* HEADER */}
@@ -892,11 +892,11 @@ export default function SimulateurInterne() {
 
         {/* NAVIGATION */}
         {step < 5 && (
-          <div className="flex justify-between print:hidden">
+          <div className="flex justify-between gap-3 print:hidden">
             <button
               onClick={() => setStep(s => Math.max(1, s - 1))}
               disabled={step === 1}
-              className={`px-5 py-2.5 rounded-xl border text-sm font-semibold transition-colors ${
+              className={`flex-1 sm:flex-none px-5 py-3 sm:py-2.5 rounded-xl border text-sm font-semibold transition-colors ${
                 step === 1
                   ? "border-gray-100 text-gray-300 cursor-not-allowed"
                   : "border-gray-300 text-[#0B1D3A] hover:bg-gray-50 cursor-pointer"
@@ -907,7 +907,7 @@ export default function SimulateurInterne() {
             <button
               onClick={() => setStep(s => Math.min(5, s + 1))}
               disabled={!canNext()}
-              className={`px-7 py-2.5 rounded-xl text-sm font-bold text-white transition-colors ${
+              className={`flex-1 sm:flex-none px-7 py-3 sm:py-2.5 rounded-xl text-sm font-bold text-white transition-colors ${
                 canNext() ? "cursor-pointer hover:opacity-90" : "cursor-not-allowed opacity-50"
               }`}
               style={{ background: canNext() ? NAVY : "#9ca3af" }}

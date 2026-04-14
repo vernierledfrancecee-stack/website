@@ -6,7 +6,7 @@ const getSecret = () =>
     process.env.ADMIN_JWT_SECRET ?? "dev-secret-replace-in-production"
   );
 
-// Strict CSP — no external frames allowed
+// Strict CSP — no external frames, not embeddable anywhere
 const STRICT_CSP = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline'",
@@ -23,7 +23,9 @@ const STRICT_CSP = [
   "upgrade-insecure-requests",
 ].join("; ");
 
-// Relaxed CSP for /simulateur-interne — allows Monday.com iframes (CRM embed)
+// CSP for /simulateur-interne:
+//   frame-src     → allows embedding Monday.com forms/views inside this page
+//   frame-ancestors → allows Monday.com to embed THIS page in an iframe
 const SIMULATEUR_INTERNE_CSP = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline'",
@@ -34,7 +36,7 @@ const SIMULATEUR_INTERNE_CSP = [
   "media-src 'none'",
   "object-src 'none'",
   "frame-src https://monday.com https://*.monday.com",
-  "frame-ancestors 'none'",
+  "frame-ancestors https://monday.com https://*.monday.com",
   "base-uri 'self'",
   "form-action 'self'",
   "upgrade-insecure-requests",
@@ -67,14 +69,22 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // ── CSP injection (per-route) ────────────────────────────────────
-  // Managed here (not in next.config.ts) so /simulateur-interne can receive
-  // a different frame-src that allows Monday.com embeds.
+  // ── CSP + framing headers (per-route) ───────────────────────────
+  // Managed here (not in next.config.ts) to avoid duplicate header conflicts.
+  // /simulateur-interne is embeddable inside Monday.com; all other routes are not.
   const response = NextResponse.next();
-  const csp = pathname.startsWith("/simulateur-interne")
-    ? SIMULATEUR_INTERNE_CSP
-    : STRICT_CSP;
-  response.headers.set("Content-Security-Policy", csp);
+  const isSimulateurInterne = pathname.startsWith("/simulateur-interne");
+
+  response.headers.set(
+    "Content-Security-Policy",
+    isSimulateurInterne ? SIMULATEUR_INTERNE_CSP : STRICT_CSP
+  );
+
+  // X-Frame-Options is a legacy fallback for browsers that don't support frame-ancestors CSP.
+  // Omit it for /simulateur-interne so Monday.com can render the page in an iframe.
+  if (!isSimulateurInterne) {
+    response.headers.set("X-Frame-Options", "DENY");
+  }
 
   return response;
 }

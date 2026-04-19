@@ -49,9 +49,8 @@ export default function PrintReport({ st }) {
     <div id="print-report" style={{ display: "none", fontFamily: "Arial, sans-serif", color: "#0d1e3a", maxWidth: 700, margin: "0 auto", padding: 24 }}>
       <style>{`
         @media print {
+          #simulator-main { display: none !important; }
           #print-report { display: block !important; }
-          body > *:not(#__next) { display: none !important; }
-          #__next > *:not(#print-report) { display: none !important; }
         }
       `}</style>
 

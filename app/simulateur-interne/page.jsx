@@ -152,9 +152,9 @@ export default function SimulateurInternePage() {
   };
 
   return (
-    <div className="pt-16 lg:pt-20 min-h-screen bg-[#f8f9fa] print:pt-0 print:bg-white">
-      <style>{`@media print{.no-print{display:none!important}.print-only{display:block!important}}`}</style>
+    <>
       <PrintReport st={st} />
+      <div id="simulator-main" className="pt-16 lg:pt-20 min-h-screen bg-[#f8f9fa]">
 
       <div className="bg-[#0d1e3a] py-10 no-print">
         <div className="max-w-2xl mx-auto px-4 text-center">
@@ -206,5 +206,6 @@ export default function SimulateurInternePage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

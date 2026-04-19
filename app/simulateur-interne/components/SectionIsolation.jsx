@@ -31,9 +31,19 @@ export default function SectionIsolation({ st, set, errors }) {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800">
-        DPE <strong>{st.classe_energie}</strong> — éligible TH-174. Objectif : atteindre la classe B après travaux.
-      </div>
+      {(() => {
+        const ok = ["C","D"].includes(st.classe_energie?.toUpperCase()) || st.type_proprietaire === "morale";
+        return (
+          <div className={`rounded-xl border px-4 py-3 text-sm ${ok ? "border-blue-200 bg-blue-50 text-blue-800" : "border-red-200 bg-red-50 text-red-700"}`}>
+            DPE <strong>{st.classe_energie}</strong> —{" "}
+            {st.type_proprietaire === "morale"
+              ? "SCI/SARL : toutes classes DPE acceptées pour TH-174."
+              : ok
+                ? "éligible TH-174. Objectif : atteindre la classe B après travaux."
+                : "non éligible TH-174 pour un particulier — seules les classes C et D sont acceptées."}
+          </div>
+        );
+      })()}
 
       {/* Gestes isolation */}
       <div>

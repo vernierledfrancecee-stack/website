@@ -80,14 +80,17 @@ export default function SimulateurInternePage() {
 
   const set = (u) => setSt((p) => ({ ...p, ...u }));
 
-  // Step visibility: TH-171 if fossile, TH-174 if maison
+  // Step visibility: TH-171 if fossile, TH-174 if maison + DPE C/D (or morale: any class)
   useEffect(() => {
     const show171 = FOSSILE.includes(st.chauffage_type);
-    const show174 = st.type_bati === "maison";
+    const dpeEligible174 = st.type_proprietaire === "morale"
+      ? /^[a-g]$/i.test(st.classe_energie)
+      : /^[cd]$/i.test(st.classe_energie);
+    const show174 = st.type_bati === "maison" && dpeEligible174;
     set({ eligible_TH171: show171, eligible_TH174: show174 });
     if (st.surface && !st.surface_pac) set({ surface_pac: st.surface });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [st.chauffage_type, st.type_bati, st.surface]);
+  }, [st.chauffage_type, st.type_bati, st.surface, st.classe_energie, st.type_proprietaire]);
 
   useEffect(() => {
     if (st.type_emetteur) set(etasParEmetteur(st.type_emetteur));

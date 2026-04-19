@@ -29,9 +29,46 @@ function RadioGroup({ legend, required, options, value, onChange, error }) {
   );
 }
 
+function Field({ label, required, error, id, ...rest }) {
+  return (
+    <div>
+      <label htmlFor={id} className="block text-sm font-medium text-[#0d1e3a] mb-1.5">
+        {label}{required && <span className="text-[#1a9e75] ml-1">*</span>}
+      </label>
+      <input id={id} className={CLS + (error ? " !border-red-400" : "")} {...rest} />
+      {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
+    </div>
+  );
+}
+
 export default function SectionRevenus({ st, set, errors }) {
   return (
     <div className="space-y-6">
+      {/* Contact */}
+      <div>
+        <p className="text-xs font-semibold text-[#2c2c2a]/40 uppercase tracking-wide mb-3">Coordonnées client</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Field id="nom"    label="Nom"    required error={errors.nom}    placeholder="Dupont"    value={st.nom}    onChange={e => set({ nom: e.target.value })} />
+          <Field id="prenom" label="Prénom" required error={errors.prenom} placeholder="Marie"     value={st.prenom} onChange={e => set({ prenom: e.target.value })} />
+          <Field id="email"  label="Email"  type="email" error={errors.email} placeholder="marie@exemple.fr" value={st.email} onChange={e => set({ email: e.target.value })} />
+          <Field id="tel"    label="Téléphone" type="tel" error={errors.tel} placeholder="06 12 34 56 78"   value={st.tel}   onChange={e => set({ tel: e.target.value })} />
+        </div>
+      </div>
+
+      <RadioGroup
+        legend="Vous êtes…"
+        required
+        value={st.statut_occupant}
+        onChange={v => set({ statut_occupant: v })}
+        error={errors.statut_occupant}
+        options={[
+          { v: "proprietaire_occupant",  label: "Propriétaire occupant",    desc: "Vous possédez et habitez ce logement" },
+          { v: "locataire",              label: "Locataire",                 desc: "Le propriétaire bailleur sera le bénéficiaire CEE" },
+          { v: "proprietaire_bailleur",  label: "Propriétaire bailleur",     desc: "Vous possédez mais n'habitez pas ce logement" },
+          { v: "autre",                  label: "Autre / SCI / Indivision",  desc: "Personne morale ou situation particulière" },
+        ]}
+      />
+
       <RadioGroup
         legend="Ce logement est-il la résidence principale ?"
         required
@@ -45,7 +82,7 @@ export default function SectionRevenus({ st, set, errors }) {
       />
 
       <RadioGroup
-        legend="Type de propriétaire"
+        legend="Type de propriétaire (entité juridique)"
         required
         value={st.type_proprietaire}
         onChange={v => set({ type_proprietaire: v })}
@@ -63,9 +100,9 @@ export default function SectionRevenus({ st, set, errors }) {
         onChange={v => set({ type_revenus: v })}
         error={errors.type_revenus}
         options={[
-          { v: "standard",      label: "Standard", desc: "Revenus supérieurs aux plafonds MaPrimeRénov'" },
-          { v: "precaire",      label: "Modeste (précaire)", desc: "Revenus inférieurs aux plafonds — couleur jaune/bleu" },
-          { v: "grand_precaire",label: "Très modeste (grand précaire)", desc: "Tarif CEE maximal (13 €/MWh TH-174)" },
+          { v: "standard",       label: "Standard",                    desc: "Revenus supérieurs aux plafonds MaPrimeRénov'" },
+          { v: "precaire",       label: "Modeste (précaire)",          desc: "Revenus inférieurs aux plafonds — couleur jaune/bleu" },
+          { v: "grand_precaire", label: "Très modeste (grand précaire)", desc: "Tarif CEE maximal (13 €/MWh TH-174)" },
         ]}
       />
 
@@ -76,7 +113,6 @@ export default function SectionRevenus({ st, set, errors }) {
         </label>
         <input type="number" min={0} className={CLS} placeholder="ex : 28 000"
           value={st.revenus} onChange={e => set({ revenus: e.target.value })} />
-        <p className="text-xs text-[#2c2c2a]/40 mt-1">Non transmis à des tiers — utile pour affiner la bonification CEE</p>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ const ADEME_URL =
 
 const FIELD_MAP: Record<string, string> = {
   "Gaz naturel": "gaz",
+  "Gaz naturel condensation": "gaz_condensation",
   "Fioul domestique": "fioul",
   "Charbon": "charbon",
   "Bois – Bûches": "bois",
@@ -25,45 +26,51 @@ function normaliseBati(raw: string | null | undefined): "maison" | "appartement"
   return "";
 }
 
+const SELECT_FIELDS = [
+  "etiquette_dpe",
+  "surface_habitable_logement",
+  "type_energie_principale_chauffage",
+  "annee_construction",
+  "type_batiment",
+].join(",");
+
+async function searchDPE(q: string): Promise<Record<string, unknown> | null> {
+  const params = new URLSearchParams({ q, q_mode: "simple", size: "1", select: SELECT_FIELDS });
+  const res = await fetch(`${ADEME_URL}?${params}`, {
+    signal: AbortSignal.timeout(6000),
+    headers: { Accept: "application/json" },
+  });
+  if (!res.ok) return null;
+  const data = await res.json();
+  return data.results?.[0] ?? null;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
     const { adresse, codePostal, commune } = body as Record<string, string>;
 
-    const query = [adresse, codePostal, commune].filter(Boolean).join(" ").trim();
-    if (!query) return NextResponse.json({ found: false });
+    if (!codePostal) return NextResponse.json({ found: false });
 
-    const params = new URLSearchParams({
-      q: query,
-      q_mode: "simple",
-      size: "1",
-      select: [
-        "etiquette_dpe",
-        "surface_habitable_logement",
-        "type_energie_principale_chauffage",
-        "annee_construction_dpe",
-        "type_batiment",
-      ].join(","),
-    });
+    // Step 1: full address search
+    const fullQuery = [adresse, codePostal, commune].filter(Boolean).join(" ").trim();
+    let hit = fullQuery ? await searchDPE(fullQuery) : null;
 
-    const res = await fetch(`${ADEME_URL}?${params}`, {
-      signal: AbortSignal.timeout(5000),
-      headers: { Accept: "application/json" },
-    });
+    // Step 2: fallback to postal code + commune only
+    if (!hit && (codePostal || commune)) {
+      const fallbackQuery = [codePostal, commune].filter(Boolean).join(" ").trim();
+      hit = await searchDPE(fallbackQuery);
+    }
 
-    if (!res.ok) return NextResponse.json({ found: false });
-
-    const data = await res.json();
-    const hit = data.results?.[0];
     if (!hit) return NextResponse.json({ found: false });
 
     return NextResponse.json({
       found: true,
       surface: hit.surface_habitable_logement ?? null,
       classe_energie: hit.etiquette_dpe ?? null,
-      chauffage_type: normaliseChauffage(hit.type_energie_principale_chauffage),
-      annee_construction: hit.annee_construction_dpe ?? null,
-      type_bati: normaliseBati(hit.type_batiment),
+      chauffage_type: normaliseChauffage(hit.type_energie_principale_chauffage as string),
+      annee_construction: hit.annee_construction ?? null,
+      type_bati: normaliseBati(hit.type_batiment as string),
     });
   } catch {
     return NextResponse.json({ found: false });

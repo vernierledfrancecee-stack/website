@@ -63,6 +63,7 @@ function InfoRow({ label, value }) {
 
 const PROPRIETAIRE_LABELS = { physique: "Personne physique", morale: "SCI / SARL / autre" };
 const REVENUS_LABELS = { standard: "Standard", precaire: "Modeste", grand_precaire: "Très modeste" };
+const STATUT_LABELS = { proprietaire_occupant: "Propriétaire occupant", locataire: "Locataire", proprietaire_bailleur: "Propriétaire bailleur", autre: "Autre / SCI / Indivision" };
 
 export default function SectionResume({ st, onPrint, pdfError }) {
   const res = evaluateEligibilite(st);
@@ -79,6 +80,10 @@ export default function SectionResume({ st, onPrint, pdfError }) {
       {/* Récap client */}
       <div className="rounded-xl border border-gray-100 bg-white p-5">
         <p className="text-xs font-semibold text-[#2c2c2a]/40 uppercase tracking-wide mb-3">📍 Récapitulatif client</p>
+        <InfoRow label="Nom" value={[st.prenom, st.nom].filter(Boolean).join(" ")} />
+        <InfoRow label="Email" value={st.email} />
+        <InfoRow label="Téléphone" value={st.tel} />
+        <InfoRow label="Statut" value={STATUT_LABELS[st.statut_occupant]} />
         <InfoRow label="Adresse" value={[st.adresse, st.codePostal, st.commune].filter(Boolean).join(", ")} />
         <InfoRow label="Type" value={st.type_bati} />
         <InfoRow label="Surface" value={st.surface ? `${st.surface} m²` : null} />

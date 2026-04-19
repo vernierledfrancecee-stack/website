@@ -7,10 +7,12 @@ import SectionChauffage    from "./components/SectionChauffage";
 import SectionPAC          from "./components/SectionPAC";
 import SectionIsolation    from "./components/SectionIsolation";
 import SectionResume       from "./components/SectionResume";
+import PrintReport         from "./components/PrintReport";
 
 const FOSSILE = ["gaz", "gaz_condensation", "fioul", "charbon"];
 
 const INIT = {
+  nom:"", prenom:"", email:"", tel:"", statut_occupant:"",
   adresse:"", codePostal:"", commune:"",
   surface:"", classe_energie:"", chauffage_type:"", type_bati:"", annee_construction:"",
   dpe_loading:false, dpe_error:null, dpe_found:false,
@@ -42,8 +44,11 @@ function validate(id, st) {
     if (!st.chauffage_type)      e.chauffage_type = "Requis";
   }
   if (id === "profil") {
-    if (!st.residence_principale) e.residence_principale = "Requis";
-    if (!st.type_proprietaire)    e.type_proprietaire = "Requis";
+    if (!st.nom)                   e.nom = "Requis";
+    if (!st.prenom)                e.prenom = "Requis";
+    if (!st.statut_occupant)       e.statut_occupant = "Requis";
+    if (!st.residence_principale)  e.residence_principale = "Requis";
+    if (!st.type_proprietaire)     e.type_proprietaire = "Requis";
   }
   if (id === "chauffage") {
     if (!st.pac_installee) e.pac_installee = "Requis";
@@ -145,7 +150,8 @@ export default function SimulateurInternePage() {
 
   return (
     <div className="pt-16 lg:pt-20 min-h-screen bg-[#f8f9fa] print:pt-0 print:bg-white">
-      <style>{`@media print{.no-print{display:none!important}}`}</style>
+      <style>{`@media print{.no-print{display:none!important}.print-only{display:block!important}}`}</style>
+      <PrintReport st={st} />
 
       <div className="bg-[#0d1e3a] py-10 no-print">
         <div className="max-w-2xl mx-auto px-4 text-center">

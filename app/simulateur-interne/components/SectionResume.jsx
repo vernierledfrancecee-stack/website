@@ -1,107 +1,125 @@
 "use client";
-import { calcTH171, calcTH174, getZoneGeo, fmtKwh } from "../utils/ceeFormulas";
+import { evaluateEligibilite, calcTH171, calcTH174, calcRevenu, getZoneGeo, fmtKwh, fmtEur } from "../utils/ceeFormulas";
+
+function Badge({ ok }) {
+  return ok
+    ? <span className="inline-flex items-center gap-1 text-xs font-bold text-[#1a9e75] bg-[#1a9e75]/10 px-2.5 py-1 rounded-full">✅ ÉLIGIBLE</span>
+    : <span className="inline-flex items-center gap-1 text-xs font-bold text-red-500 bg-red-50 px-2.5 py-1 rounded-full">❌ NON ÉLIGIBLE</span>;
+}
+
+function FicheCard({ title, result, volume, revenu, color = "#1a9e75" }) {
+  return (
+    <div className="rounded-xl border-2 overflow-hidden" style={{ borderColor: color }}>
+      <div className="px-5 py-4 flex items-center justify-between" style={{ background: `${color}12` }}>
+        <p className="font-bold text-[#0d1e3a] text-sm">{title}</p>
+        <Badge ok={result.eligible} />
+      </div>
+      <div className="px-5 py-4 space-y-3">
+        {result.eligible ? (
+          <>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="rounded-lg bg-gray-50 p-3 text-center">
+                <p className="text-xs text-[#2c2c2a]/50 mb-1">Volume CEE estimé</p>
+                <p className="text-sm font-bold" style={{ color }}>{fmtKwh(volume)}</p>
+              </div>
+              <div className="rounded-lg bg-gray-50 p-3 text-center">
+                <p className="text-xs text-[#2c2c2a]/50 mb-1">Estimation brute</p>
+                <p className="text-sm font-bold text-[#0d1e3a]">{fmtEur(revenu)}</p>
+              </div>
+            </div>
+            {result.scenario && (
+              <p className="text-xs text-[#2c2c2a]/60">📋 Scénario : <strong>{result.scenario}</strong></p>
+            )}
+          </>
+        ) : (
+          <ul className="space-y-1">
+            {result.blocages.map((b, i) => (
+              <li key={i} className="flex items-start gap-2 text-xs text-red-700">
+                <span className="shrink-0 mt-0.5">→</span>{b}
+              </li>
+            ))}
+          </ul>
+        )}
+        {result.warnings.length > 0 && (
+          <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 space-y-1">
+            {result.warnings.map((w, i) => (
+              <p key={i} className="text-xs text-amber-700">⚠️ {w}</p>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 function InfoRow({ label, value }) {
-  return (
+  return value ? (
     <div className="flex justify-between py-1.5 border-b border-gray-100 last:border-0">
       <span className="text-sm text-[#2c2c2a]/60">{label}</span>
-      <span className="text-sm font-medium text-[#0d1e3a]">{value || "—"}</span>
+      <span className="text-sm font-medium text-[#0d1e3a]">{value}</span>
     </div>
-  );
+  ) : null;
 }
 
-function VolumeCard({ title, volume, color = "#1a9e75", phase, badge }) {
-  return (
-    <div className={`rounded-xl border-2 p-5`} style={{ borderColor: color }}>
-      <div className="flex items-start justify-between gap-2 mb-2">
-        <p className="text-sm font-semibold text-[#0d1e3a]">{title}</p>
-        {badge && <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ background: color }}>{badge}</span>}
-      </div>
-      {phase && <p className="text-xs text-[#2c2c2a]/50 mb-2">{phase}</p>}
-      <p className="text-xl font-bold" style={{ color }}>{fmtKwh(volume)}</p>
-    </div>
-  );
-}
+const PROPRIETAIRE_LABELS = { physique: "Personne physique", morale: "SCI / SARL / autre" };
+const REVENUS_LABELS = { standard: "Standard", precaire: "Modeste", grand_precaire: "Très modeste" };
 
 export default function SectionResume({ st, onPrint, pdfError }) {
-  const { eligible_TH171, eligible_TH174 } = st;
-  const vol171 = eligible_TH171 ? calcTH171(st) : 0;
-  const vol174 = eligible_TH174 ? calcTH174(st) : 0;
-  const zone = getZoneGeo(st.codePostal);
-  const date = new Date().toLocaleDateString("fr-FR");
-  const neither = !eligible_TH171 && !eligible_TH174;
+  const res = evaluateEligibilite(st);
+  const vol171 = res.eligible_TH171 ? calcTH171(st) : 0;
+  const vol174 = res.eligible_TH174 ? calcTH174(st) : 0;
+  const rev171 = calcRevenu(vol171, st.type_revenus, "th171");
+  const rev174 = calcRevenu(vol174, st.type_revenus, "th174");
+  const zone   = getZoneGeo(st.codePostal);
+  const date   = new Date().toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric" });
+  const both   = res.eligible_TH171 && res.eligible_TH174;
 
   return (
     <div className="space-y-6">
-      {/* Éligibilité */}
-      <div className="grid grid-cols-2 gap-3">
-        {[
-          { label: "TH-171 — PAC air/eau", ok: eligible_TH171 },
-          { label: "TH-174 — Isolation",   ok: eligible_TH174 },
-        ].map(({ label, ok }) => (
-          <div key={label} className={`rounded-xl p-4 border-2 ${ok ? "border-[#1a9e75] bg-[#1a9e75]/5" : "border-gray-200 bg-gray-50"}`}>
-            <p className={`text-xs font-bold mb-1 ${ok ? "text-[#1a9e75]" : "text-gray-400"}`}>
-              {ok ? "✓ ÉLIGIBLE" : "✗ Non éligible"}
-            </p>
-            <p className="text-sm font-medium text-[#0d1e3a]">{label}</p>
-          </div>
-        ))}
-      </div>
-
-      {neither && (
-        <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-800">
-          Aucune éligibilité détectée avec les données actuelles. Vérifiez la classe DPE et le type de chauffage.
-        </div>
-      )}
-
-      {/* Volumes CEE */}
-      {(eligible_TH171 || eligible_TH174) && (
-        <div className="space-y-3">
-          <p className="text-sm font-semibold text-[#0d1e3a]">Volumes CEE estimés</p>
-          {eligible_TH171 && eligible_TH174 && (
-            <>
-              <VolumeCard title="PAC air/eau (TH-171)" volume={vol171} badge="×5" phase="Phase 1 — Priorité" />
-              <VolumeCard title="Isolation (TH-174)" volume={vol174} color="#3b82f6" phase="Phase 2" />
-            </>
-          )}
-          {eligible_TH171 && !eligible_TH174 && (
-            <VolumeCard title="PAC air/eau (TH-171)" volume={vol171} badge="×5" phase="Phase 1 unique" />
-          )}
-          {!eligible_TH171 && eligible_TH174 && (
-            <VolumeCard title="Isolation (TH-174)" volume={vol174} color="#3b82f6" phase="Phase 1 unique" />
-          )}
-          <p className="text-xs text-[#2c2c2a]/40">Zone climatique : {zone} · Surface : {st.surface || "?"}m²</p>
-        </div>
-      )}
-
-      {/* Récap données */}
+      {/* Récap client */}
       <div className="rounded-xl border border-gray-100 bg-white p-5">
-        <p className="text-sm font-semibold text-[#0d1e3a] mb-3">Récapitulatif</p>
+        <p className="text-xs font-semibold text-[#2c2c2a]/40 uppercase tracking-wide mb-3">📍 Récapitulatif client</p>
         <InfoRow label="Adresse" value={[st.adresse, st.codePostal, st.commune].filter(Boolean).join(", ")} />
-        <InfoRow label="Type bâtiment" value={st.type_bati} />
+        <InfoRow label="Type" value={st.type_bati} />
         <InfoRow label="Surface" value={st.surface ? `${st.surface} m²` : null} />
-        <InfoRow label="Classe DPE" value={st.classe_energie} />
-        <InfoRow label="Chauffage actuel" value={st.chauffage_type} />
-        <InfoRow label="Profil revenus" value={{ standard: "Standard", precaire: "Modeste", grand_precaire: "Très modeste" }[st.type_revenus]} />
-        {eligible_TH171 && <InfoRow label="Émetteurs" value={st.type_emetteur} />}
-        {eligible_TH171 && <InfoRow label="ETAS PAC" value={st.etas ? `${st.etas} %` : null} />}
-        {eligible_TH171 && <InfoRow label="Application" value={st.type_application} />}
+        <InfoRow label="DPE actuel" value={st.classe_energie ? `${st.classe_energie} → objectif B` : null} />
+        <InfoRow label="Chauffage" value={st.chauffage_type} />
+        <InfoRow label="Zone climatique" value={zone} />
+        <InfoRow label="Propriétaire" value={PROPRIETAIRE_LABELS[st.type_proprietaire]} />
+        <InfoRow label="Revenus" value={REVENUS_LABELS[st.type_revenus]} />
+        <InfoRow label="Résidence principale" value={st.residence_principale === "oui" ? "Oui" : st.residence_principale === "non" ? "Non" : null} />
         <InfoRow label="Date simulation" value={date} />
       </div>
 
-      {/* Export PDF */}
+      {/* TH-171 */}
+      <FicheCard title="TH-171 — Pompe à Chaleur air/eau" result={res.th171} volume={vol171} revenu={rev171} />
+
+      {/* TH-174 */}
+      <FicheCard title="TH-174 — Isolation thermique" result={res.th174} volume={vol174} revenu={rev174} color="#3b82f6" />
+
+      {/* Plan d'action */}
+      {(res.eligible_TH171 || res.eligible_TH174) && (
+        <div className="rounded-xl bg-[#0d1e3a] p-5 text-white space-y-2">
+          <p className="text-sm font-bold mb-3">🎯 Prochaines étapes</p>
+          {both && (
+            <>
+              <p className="text-sm">→ <strong>Phase 1 :</strong> Audit PAC + devis RGE (TH-171 prioritaire — bonus ×5)</p>
+              <p className="text-sm">→ <strong>Phase 2 :</strong> Audit isolation + devis isolation (TH-174)</p>
+            </>
+          )}
+          {res.eligible_TH171 && !res.eligible_TH174 && <p className="text-sm">→ Audit PAC + devis RGE</p>}
+          {!res.eligible_TH171 && res.eligible_TH174 && <p className="text-sm">→ Audit énergétique + devis isolation</p>}
+        </div>
+      )}
+
+      {/* Export */}
       <div>
         <button type="button" onClick={onPrint}
-          className="w-full inline-flex items-center justify-center gap-2 bg-[#0d1e3a] hover:bg-[#1a3460] text-white font-semibold px-8 py-4 rounded-xl transition-colors">
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3M3 17v3a2 2 0 002 2h14a2 2 0 002-2v-3" />
-          </svg>
-          Télécharger le rapport PDF
+          className="w-full inline-flex items-center justify-center gap-2 bg-[#1a9e75] hover:bg-[#147a5b] text-white font-semibold px-8 py-4 rounded-xl transition-colors">
+          📥 Télécharger le rapport PDF
         </button>
         {pdfError && <p className="text-xs text-red-500 mt-2 text-center">{pdfError}</p>}
-        <p className="text-xs text-[#2c2c2a]/40 text-center mt-2">
-          Utilise l'impression navigateur — à joindre dans Monday.com
-        </p>
+        <p className="text-xs text-[#2c2c2a]/40 text-center mt-2">Impression navigateur — à joindre dans Monday.com</p>
       </div>
     </div>
   );

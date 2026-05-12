@@ -22,6 +22,10 @@ const INIT = {
   acces_exterieur:"", surface_pac:"", type_application:"",
   geste_combles:false, geste_sous_sol:false, geste_murs:false, geste_fenetres:false,
   fenetres_bois_sv:"", vmc:"", isolation_anterieure:"", annee_isolation_anterieure:"",
+  // Nouveaux champs simulation LEDX
+  emplacement_chauffage:"", eau_chaude:"", type_compteur:"", type_radiateur:"",
+  hauteur_plafond:"", annee_isolation_combles:"", annee_isolation_murs:"", annee_isolation_sous_sol:"",
+  pose_par:"",
 };
 
 function buildSteps(showTH171, showTH174) {
@@ -35,13 +39,16 @@ function buildSteps(showTH171, showTH174) {
 function validate(id, st) {
   const e = {};
   if (id === "localisation") {
-    if (!st.codePostal)          e.codePostal = "Requis";
-    if (!st.commune)             e.commune = "Requis";
-    if (!st.type_bati)           e.type_bati = "Requis";
-    if (!st.surface)             e.surface = "Requis";
-    if (!st.annee_construction)  e.annee_construction = "Requis";
-    if (!st.classe_energie)      e.classe_energie = "Requis";
-    if (!st.chauffage_type)      e.chauffage_type = "Requis";
+    if (!st.codePostal)                e.codePostal = "Requis";
+    if (!st.commune)                   e.commune = "Requis";
+    if (!st.type_bati)                 e.type_bati = "Requis";
+    if (!st.surface)                   e.surface = "Requis";
+    if (!st.annee_construction)        e.annee_construction = "Requis";
+    if (!st.classe_energie)            e.classe_energie = "Requis";
+    if (!st.chauffage_type)            e.chauffage_type = "Requis";
+    if (!st.hauteur_plafond)           e.hauteur_plafond = "Requis";
+    if (st.annee_isolation_combles === "") e.annee_isolation_combles = "Requis";
+    if (st.annee_isolation_murs === "")    e.annee_isolation_murs = "Requis";
   }
   if (id === "profil") {
     if (!st.nom)                   e.nom = "Requis";

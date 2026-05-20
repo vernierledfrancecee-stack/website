@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { signAdminToken, COOKIE_NAME, COOKIE_MAX_AGE } from "@/lib/admin-auth";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import bcrypt from "bcryptjs";
+import { authenticator } from "otplib";
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
-  const rl = rateLimit(`admin-login:${ip}`, 5, 15 * 60_000);
+  const rl = await rateLimit(`admin-login:${ip}`, 5, 15 * 60_000);
   if (!rl.success) {
     return NextResponse.json(
       { message: "Trop de tentatives. Réessayez dans 15 minutes." },
@@ -19,7 +21,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Requête invalide" }, { status: 400 });
   }
 
-  const { password } = body as { password?: string };
+  const { password, totp } = body as { password?: string; totp?: string };
   if (!password) return NextResponse.json({ message: "Mot de passe requis" }, { status: 400 });
 
   const adminPassword = process.env.ADMIN_PASSWORD;
@@ -28,8 +30,25 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Non configuré" }, { status: 503 });
   }
 
-  if (password !== adminPassword) {
+  // Support bcrypt hashes ($2b$... / $2a$...) and plain-text passwords
+  const isBcrypt = adminPassword.startsWith("$2b$") || adminPassword.startsWith("$2a$");
+  const passwordOk = isBcrypt
+    ? await bcrypt.compare(password, adminPassword)
+    : password === adminPassword;
+
+  if (!passwordOk) {
     return NextResponse.json({ message: "Mot de passe incorrect" }, { status: 401 });
+  }
+
+  const totpSecret = process.env.ADMIN_TOTP_SECRET;
+  if (totpSecret) {
+    if (!totp) {
+      // Password correct — signal client to show TOTP step
+      return NextResponse.json({ totp_required: true }, { status: 200 });
+    }
+    if (!authenticator.verify({ token: totp, secret: totpSecret })) {
+      return NextResponse.json({ message: "Code TOTP invalide" }, { status: 401 });
+    }
   }
 
   const token = await signAdminToken();

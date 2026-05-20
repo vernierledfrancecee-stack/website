@@ -1,13 +1,36 @@
-interface RateLimitEntry {
-  count: number;
-  resetAt: number;
+import { Redis } from "@upstash/redis";
+import { Ratelimit } from "@upstash/ratelimit";
+
+// Upstash Redis client — only created when env vars are present
+let redis: Redis | null = null;
+if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  redis = new Redis({
+    url: process.env.UPSTASH_REDIS_REST_URL,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN,
+  });
 }
 
-// In-memory store — works per instance; sufficient for serverless cold starts
-// For distributed rate limiting, replace with Upstash Redis
-const store = new Map<string, RateLimitEntry>();
+// Cache Ratelimit instances keyed by "limit:windowMs" to avoid re-creating them
+const limiterCache = new Map<string, Ratelimit>();
+function getUpstashLimiter(limit: number, windowMs: number): Ratelimit {
+  const key = `${limit}:${windowMs}`;
+  if (!limiterCache.has(key)) {
+    const windowSec = Math.round(windowMs / 1000);
+    limiterCache.set(
+      key,
+      new Ratelimit({
+        redis: redis!,
+        limiter: Ratelimit.slidingWindow(limit, `${windowSec} s`),
+        prefix: "rl",
+      })
+    );
+  }
+  return limiterCache.get(key)!;
+}
 
-// Cleanup stale entries periodically to avoid memory leaks
+// In-memory fallback for local dev (single-instance only)
+interface RateLimitEntry { count: number; resetAt: number }
+const store = new Map<string, RateLimitEntry>();
 let lastCleanup = Date.now();
 function cleanupIfNeeded() {
   const now = Date.now();
@@ -18,25 +41,27 @@ function cleanupIfNeeded() {
   }
 }
 
-export function rateLimit(
+export async function rateLimit(
   identifier: string,
   limit: number = 10,
   windowMs: number = 60_000
-): { success: boolean; remaining: number; resetAt: number } {
+): Promise<{ success: boolean; remaining: number; resetAt: number }> {
+  if (redis) {
+    const { success, remaining, reset } = await getUpstashLimiter(limit, windowMs).limit(identifier);
+    return { success, remaining, resetAt: Number(reset) };
+  }
+
   cleanupIfNeeded();
   const now = Date.now();
   const entry = store.get(identifier);
-
   if (!entry || entry.resetAt < now) {
     const resetAt = now + windowMs;
     store.set(identifier, { count: 1, resetAt });
     return { success: true, remaining: limit - 1, resetAt };
   }
-
   if (entry.count >= limit) {
     return { success: false, remaining: 0, resetAt: entry.resetAt };
   }
-
   entry.count++;
   return { success: true, remaining: limit - entry.count, resetAt: entry.resetAt };
 }

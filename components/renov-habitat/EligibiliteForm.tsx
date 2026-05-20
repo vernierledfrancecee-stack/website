@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Profil = "occupant" | "bailleur" | "copropriete" | "locataire";
 type Chauffage = "gaz" | "fioul" | "electrique" | "autre";
 type TypeLogement = "maison" | "appartement";
 type Step = 1 | 2 | 3 | 4;
-type Status = "idle" | "sending" | "success" | "error";
+type Status = "idle" | "sending" | "error";
 
 interface Answers {
   profil?: Profil;
@@ -132,6 +133,7 @@ function NonEligible({ reason, onBack }: { reason: string; onBack: () => void })
 // ─── Composant principal ──────────────────────────────────────────────────────
 
 export default function EligibiliteForm() {
+  const router = useRouter();
   const [step, setStep] = useState<Step>(1);
   const [answers, setAnswers] = useState<Answers>({});
   const [showBalconQ, setShowBalconQ] = useState(false);
@@ -241,7 +243,11 @@ export default function EligibiliteForm() {
           message: messageBody,
         }),
       });
-      setStatus(res.ok ? "success" : "error");
+      if (res.ok) {
+        router.push("/merci");
+      } else {
+        setStatus("error");
+      }
     } catch {
       setStatus("error");
     }
@@ -276,29 +282,8 @@ export default function EligibiliteForm() {
         {/* Carte */}
         <div className="bg-white border border-gray-100 rounded-2xl shadow-sm p-5 sm:p-8">
 
-          {/* ── Succès ── */}
-          {status === "success" ? (
-            <div className="text-center py-4">
-              <div className="w-16 h-16 rounded-full bg-[#1a9e75]/10 flex items-center justify-center mx-auto mb-5">
-                <svg className="w-8 h-8 text-[#1a9e75]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-[#0d1e3a] text-xl mb-2">
-                Merci {fields.prenom.trim()} !
-              </h3>
-              <p className="text-[#2c2c2a]/60 text-sm mb-6 max-w-xs mx-auto">
-                Notre équipe LEDX Rénov&apos;Habitat vous contacte sous 24h pour votre étude gratuite.
-              </p>
-              <button
-                onClick={reset}
-                className="text-xs text-[#2c2c2a]/40 hover:text-[#2c2c2a]/70 transition-colors"
-              >
-                Nouvelle simulation
-              </button>
-            </div>
-
-          ) : nonEligible ? (
+          {/* ── Non éligible ── */}
+          {nonEligible ? (
             <NonEligible reason={nonEligible} onBack={reset} />
 
           ) : (

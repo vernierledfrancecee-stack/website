@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface FormData {
   nom: string;
@@ -23,9 +24,10 @@ const initialData: FormData = {
 };
 
 export default function ContactForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState<FormData>(initialData);
   const [errors, setErrors] = useState<Partial<FormData>>({});
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
 
   const update = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -56,28 +58,11 @@ export default function ContactForm() {
         body: JSON.stringify(formData),
       });
       if (!res.ok) throw new Error("Erreur serveur");
-      setStatus("success");
-      setFormData(initialData);
+      router.push("/merci");
     } catch {
       setStatus("error");
     }
   };
-
-  if (status === "success") {
-    return (
-      <div className="bg-[#1a9e75]/10 border border-[#1a9e75]/20 rounded-2xl p-8 text-center">
-        <div className="w-14 h-14 rounded-full bg-[#1a9e75]/20 flex items-center justify-center mx-auto mb-4">
-          <svg className="w-7 h-7 text-[#1a9e75]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-        <h3 className="font-bold text-[#0d1e3a] text-xl mb-2">Message envoyé !</h3>
-        <p className="text-[#2c2c2a]/60 text-sm">
-          Nos experts vous répondront sous 24 heures ouvrées.
-        </p>
-      </div>
-    );
-  }
 
   const inputClass = (field: keyof FormData) =>
     `w-full px-4 py-3 rounded-xl border text-[#2c2c2a] text-sm bg-white focus:outline-none focus:ring-2 transition-all ${

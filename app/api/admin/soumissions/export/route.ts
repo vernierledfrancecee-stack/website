@@ -13,6 +13,14 @@ export async function GET(req: NextRequest) {
   const from = searchParams.get("from");
   const to = searchParams.get("to");
 
+  const ISO_DATE_RE = /^\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/;
+  if (from && !ISO_DATE_RE.test(from)) {
+    return NextResponse.json({ message: "Paramètre 'from' invalide (attendu YYYY-MM-DD)" }, { status: 400 });
+  }
+  if (to && !ISO_DATE_RE.test(to)) {
+    return NextResponse.json({ message: "Paramètre 'to' invalide (attendu YYYY-MM-DD)" }, { status: 400 });
+  }
+
   const fromDate = from ? new Date(from + "T00:00:00") : undefined;
   const toDate = to ? new Date(to + "T23:59:59") : undefined;
 

@@ -1,14 +1,16 @@
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+
+// ── In-memory fallback (per-instance; not effective across serverless instances) ──
+
 interface RateLimitEntry {
   count: number;
   resetAt: number;
 }
 
-// In-memory store — works per instance; sufficient for serverless cold starts
-// For distributed rate limiting, replace with Upstash Redis
 const store = new Map<string, RateLimitEntry>();
-
-// Cleanup stale entries periodically to avoid memory leaks
 let lastCleanup = Date.now();
+
 function cleanupIfNeeded() {
   const now = Date.now();
   if (now - lastCleanup < 60_000) return;
@@ -18,10 +20,10 @@ function cleanupIfNeeded() {
   }
 }
 
-export function rateLimit(
+function inMemoryRateLimit(
   identifier: string,
-  limit: number = 10,
-  windowMs: number = 60_000
+  limit: number,
+  windowMs: number
 ): { success: boolean; remaining: number; resetAt: number } {
   cleanupIfNeeded();
   const now = Date.now();
@@ -41,8 +43,74 @@ export function rateLimit(
   return { success: true, remaining: limit - entry.count, resetAt: entry.resetAt };
 }
 
+// ── Upstash Redis rate limiter (distributed, serverless-safe) ─────────────────
+
+let redisClient: Redis | null = null;
+const limiterCache = new Map<string, Ratelimit>();
+
+function getRedis(): Redis | null {
+  if (redisClient) return redisClient;
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return null;
+  redisClient = new Redis({ url, token });
+  return redisClient;
+}
+
+function getLimiter(limit: number, windowMs: number): Ratelimit | null {
+  const redis = getRedis();
+  if (!redis) return null;
+
+  const key = `${limit}:${windowMs}`;
+  if (limiterCache.has(key)) return limiterCache.get(key)!;
+
+  const windowSec = Math.max(1, Math.floor(windowMs / 1000));
+  const limiter = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(limit, `${windowSec} s`),
+  });
+  limiterCache.set(key, limiter);
+  return limiter;
+}
+
+// ── Public API ────────────────────────────────────────────────────────────────
+
+export async function rateLimit(
+  identifier: string,
+  limit: number = 10,
+  windowMs: number = 60_000
+): Promise<{ success: boolean; remaining: number; resetAt: number }> {
+  const limiter = getLimiter(limit, windowMs);
+
+  if (limiter) {
+    try {
+      const result = await limiter.limit(identifier);
+      return { success: result.success, remaining: result.remaining, resetAt: result.reset };
+    } catch (err) {
+      console.error("[rate-limit] Upstash error, falling back to in-memory:", err);
+    }
+  } else if (process.env.NODE_ENV === "production") {
+    console.warn(
+      "[rate-limit] UPSTASH_REDIS_REST_URL not set — using in-memory fallback (not effective across distributed serverless instances)"
+    );
+  }
+
+  return inMemoryRateLimit(identifier, limit, windowMs);
+}
+
+// Returns the real client IP.
+// Prefers x-real-ip (set by Vercel to the actual client address).
+// Falls back to the LAST entry of x-forwarded-for (platform-appended, not
+// client-controlled) rather than the first (which a client can spoof).
 export function getClientIp(req: Request): string {
+  const realIp = (req.headers as Headers).get("x-real-ip");
+  if (realIp) return realIp.trim();
+
   const forwarded = (req.headers as Headers).get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0].trim();
+  if (forwarded) {
+    const parts = forwarded.split(",");
+    return parts[parts.length - 1].trim();
+  }
+
   return "unknown";
 }

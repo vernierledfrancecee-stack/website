@@ -13,12 +13,10 @@ const KEYWORDS = [
 ];
 
 export async function GET(req: NextRequest) {
-  // Vérification sécurité Vercel Cron
+  // Vérification sécurité Vercel Cron (toujours active, y compris en preview)
+  const cronSecret = process.env.CRON_SECRET;
   const authHeader = req.headers.get("authorization");
-  if (
-    process.env.NODE_ENV === "production" &&
-    authHeader !== `Bearer ${process.env.CRON_SECRET}`
-  ) {
+  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 

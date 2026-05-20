@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
-const getSecret = () =>
-  new TextEncoder().encode(
-    process.env.ADMIN_JWT_SECRET ?? "dev-secret-replace-in-production"
-  );
+const getSecret = (): Uint8Array => {
+  const secret = process.env.ADMIN_JWT_SECRET;
+  if (!secret) throw new Error("ADMIN_JWT_SECRET environment variable is required");
+  return new TextEncoder().encode(secret);
+};
 
 // Strict CSP — no external frames, not embeddable anywhere
 const STRICT_CSP = [

@@ -134,7 +134,6 @@ export async function POST(
     return NextResponse.json({ success: true, mondayItemId });
   } catch (err) {
     console.error("[POST /api/admin/leads/[id]/sync]", err);
-    const message = err instanceof Error ? err.message : "Erreur interne du serveur";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: "Erreur interne du serveur" }, { status: 500 });
   }
 }

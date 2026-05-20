@@ -5,7 +5,7 @@ import { pushToCrm } from "@/lib/crm-webhook";
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
-  const rl = rateLimit(`contact:${ip}`, 5, 60_000);
+  const rl = await rateLimit(`contact:${ip}`, 5, 60_000);
   if (!rl.success) {
     return NextResponse.json(
       { message: "Trop de tentatives. Veuillez réessayer dans une minute." },

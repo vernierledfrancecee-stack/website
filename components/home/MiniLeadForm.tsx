@@ -14,7 +14,6 @@ const typesClient = [
 export default function MiniLeadForm() {
   const router = useRouter();
   const [form, setForm] = useState({ nom: "", prenom: "", email: "", type: "", telephone: "", surface: "" });
-  const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -53,9 +52,7 @@ export default function MiniLeadForm() {
         setLoading(false);
         return;
       }
-      setSent(true);
-      // Redirect après 1.5s
-      setTimeout(() => router.push("/simulateur"), 1500);
+      router.push("/merci");
     } catch {
       setError("Une erreur est survenue. Veuillez réessayer.");
       setLoading(false);
@@ -78,18 +75,7 @@ export default function MiniLeadForm() {
           </p>
         </div>
 
-        {sent ? (
-          <div className="text-center py-10">
-            <div className="w-16 h-16 rounded-full bg-[#1a9e75]/20 border border-[#1a9e75]/40 flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-[#1a9e75]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold text-white mb-2">Demande enregistrée !</h3>
-            <p className="text-white/60 text-sm">Redirection vers le simulateur…</p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-3">
             {/* Nom + Prénom */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <input
@@ -160,7 +146,6 @@ export default function MiniLeadForm() {
               {loading ? "Envoi…" : "Demander une analyse de parc →"}
             </button>
           </form>
-        )}
 
         <p className="text-center text-white/30 text-xs mt-5">
           Analyse confidentielle · Réponse sous 24h · 0 € de frais

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -66,6 +67,18 @@ export default function RootLayout({
             (/simulateur-interne, /admin) that are embedded or used as internal tools. */}
         <ConditionalShell>{children}</ConditionalShell>
         <PageTracker />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=GT-PL953BDP"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'GT-PL953BDP');
+          `}
+        </Script>
       </body>
     </html>
   );

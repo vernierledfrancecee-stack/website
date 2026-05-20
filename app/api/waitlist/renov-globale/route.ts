@@ -20,7 +20,7 @@ const waitlistSchema = z.object({
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
-  const rl = rateLimit(`waitlist:${ip}`, 3, 60_000);
+  const rl = await rateLimit(`waitlist:${ip}`, 3, 60_000);
   if (!rl.success) {
     return NextResponse.json(
       { message: "Trop de tentatives. Veuillez réessayer dans une minute." },

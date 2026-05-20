@@ -14,7 +14,7 @@ function isBot(ua: string): boolean {
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
   // Allow 30 tracked page views per minute per IP (generous for real users)
-  const rl = rateLimit(`pageview:${ip}`, 30, 60_000);
+  const rl = await rateLimit(`pageview:${ip}`, 30, 60_000);
   if (!rl.success) return NextResponse.json({ ok: false }, { status: 429 });
 
   const ua = req.headers.get("user-agent") ?? "";

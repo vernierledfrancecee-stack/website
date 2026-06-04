@@ -45,30 +45,6 @@ const SIMULATEUR_INTERNE_CSP = [
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // ── Admin authentication ──────────────────────────────────────────
-  if (pathname.startsWith("/admin")) {
-    const isLoginPage = pathname === "/admin/login";
-    const token = req.cookies.get("admin_session")?.value;
-    let isValid = false;
-
-    if (token) {
-      try {
-        await jwtVerify(token, getSecret());
-        isValid = true;
-      } catch {
-        isValid = false;
-      }
-    }
-
-    if (isLoginPage && isValid) {
-      return NextResponse.redirect(new URL("/admin", req.url));
-    }
-
-    if (!isLoginPage && !isValid) {
-      return NextResponse.redirect(new URL("/admin/login", req.url));
-    }
-  }
-
   // ── CSP + framing headers (per-route) ───────────────────────────
   // Managed here (not in next.config.ts) to avoid duplicate header conflicts.
   // /simulateur-interne is embeddable inside Monday.com; all other routes are not.

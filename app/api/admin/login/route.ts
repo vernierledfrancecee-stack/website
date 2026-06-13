@@ -2,7 +2,44 @@ import { NextRequest, NextResponse } from "next/server";
 import { signAdminToken, COOKIE_NAME, COOKIE_MAX_AGE } from "@/lib/admin-auth";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import bcrypt from "bcryptjs";
-import { authenticator } from "otplib";
+import crypto from "crypto";
+
+function base32Decode(secret: string): Buffer {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+  let bits = 0;
+  let value = 0;
+  const output: number[] = [];
+  for (const char of secret.toUpperCase().replace(/=+$/, "")) {
+    const idx = chars.indexOf(char);
+    if (idx === -1) continue;
+    value = (value << 5) | idx;
+    bits += 5;
+    if (bits >= 8) {
+      output.push((value >>> (bits - 8)) & 0xff);
+      bits -= 8;
+    }
+  }
+  return Buffer.from(output);
+}
+
+function verifyTotp(token: string, secret: string): boolean {
+  const key = base32Decode(secret);
+  const step = Math.floor(Date.now() / 1000 / 30);
+  for (const t of [step - 1, step, step + 1]) {
+    const buf = Buffer.alloc(8);
+    buf.writeBigInt64BE(BigInt(t));
+    const hmac = crypto.createHmac("sha1", key).update(buf).digest();
+    const offset = hmac[hmac.length - 1] & 0xf;
+    const code =
+      (((hmac[offset] & 0x7f) << 24) |
+        (hmac[offset + 1] << 16) |
+        (hmac[offset + 2] << 8) |
+        hmac[offset + 3]) %
+      1_000_000;
+    if (String(code).padStart(6, "0") === token) return true;
+  }
+  return false;
+}
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
@@ -46,7 +83,7 @@ export async function POST(req: NextRequest) {
       // Password correct — signal client to show TOTP step
       return NextResponse.json({ totp_required: true }, { status: 200 });
     }
-    if (!authenticator.verify({ token: totp, secret: totpSecret })) {
+    if (!verifyTotp(totp, totpSecret)) {
       return NextResponse.json({ message: "Code TOTP invalide" }, { status: 401 });
     }
   }

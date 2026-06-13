@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
+import MetaPixel from "@/components/MetaPixel";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -63,6 +64,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className="h-full">
       <body className="min-h-screen flex flex-col antialiased">
+        <MetaPixel />
         {/* ConditionalShell hides Navbar/Footer/widgets on standalone routes
             (/simulateur-interne, /admin) that are embedded or used as internal tools. */}
         <ConditionalShell>{children}</ConditionalShell>

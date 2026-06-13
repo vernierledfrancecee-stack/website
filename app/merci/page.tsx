@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import LedxLogo from "@/components/LedxLogo";
+import LeadEvent from "@/components/LeadEvent";
 
 export const metadata: Metadata = {
   title: "Demande enregistrée | LEDX Énergie",
@@ -29,6 +30,7 @@ const steps = [
 export default function MerciPage() {
   return (
     <div className="pt-16 lg:pt-20 min-h-[calc(100vh-1px)] flex flex-col lg:flex-row">
+      <LeadEvent />
       {/* ── Côté gauche : confirmation ── */}
       <div className="flex-1 bg-gradient-to-br from-[#0d1e3a] via-[#112545] to-[#0c2448] flex items-center justify-center px-8 py-16 lg:px-16">
         <div className="w-full max-w-lg">
